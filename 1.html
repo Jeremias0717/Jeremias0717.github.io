@@ -1,0 +1,1515 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fortune_ecu</title>
+  <style>
+    .galeria {
+  position: relative;
+  max-width: 400px;
+  margin: auto;
+}
+
+.slides img {
+  width: 100%;
+  border-radius: 10px;
+  display: none; /* Ocultas todas por defecto */
+}
+
+.slides img.activo {
+  display: block; /* Solo la activa se muestra */
+}
+
+.controles {
+  margin-top: 0.5rem;
+}
+.controles button {
+  background-color: #cfe8ff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0 0.2rem;
+}
+.controles button:hover {
+  background-color: #b5d8ff;
+}
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffeef8;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .logo h1 {
+      color: #d97ca3;
+      font-size: 2rem;
+      margin: 0;
+    }
+
+    .logo p {
+      font-size: 1.1rem;
+      color: #555;
+    }
+
+    .icons span {
+      font-size: 1.5rem;
+      margin: 0 0.3rem;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+
+    .catalogo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      transition: opacity 0.5s ease;
+    }
+
+    .producto {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      padding: 1rem;
+      transition: transform 0.2s ease;
+      
+    }
+
+    .producto:hover {
+      transform: scale(1.03);
+    }
+
+    .producto img {
+      width: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .precio {
+      font-weight: bold;
+      color: #d97ca3;
+      margin: 0.5rem 0;
+    }
+
+    a button, .detalle-btn {
+      background-color: #cfe8ff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      color: #333;
+      transition: background-color 0.3s;
+      margin: 0.3rem;
+    }
+
+    a button:hover, .detalle-btn:hover {
+      background-color: #b5d8ff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    /* Estilo para páginas de detalle */
+    .detalle {
+      display: none;
+      padding: 2rem;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .detalle.activo {
+      display: block;
+      opacity: 1;
+    }
+
+    .detalle img {
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .detalle h1 {
+      color: #d97ca3;
+    }
+
+    .detalle .precio {
+      font-size: 1.2rem;
+    }
+
+    .volver {
+      margin-top: 0.5rem;
+      display: inline-block;
+      background-color: #cfe8ff;
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .volver:hover {
+      background-color: #b5d8ff;
+    }
+    .detalle-contenido {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  text-align: left;
+}
+
+.detalle-imagen {
+  flex: 1 1 350px;
+  display: flex;
+  justify-content: center;
+}
+
+.detalle-texto {
+  flex: 1 1 350px;
+}
+
+.detalle-texto h1 {
+  color: #d97ca3;
+  margin-bottom: 0.5rem;
+}
+
+.detalle-texto p {
+  margin-bottom: 0.8rem;
+}
+/* Diseño lado a lado para pantallas grandes */
+.detalle-contenido {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  text-align: left;
+}
+
+.detalle-imagen {
+  flex: 1 1 350px;
+  display: flex;
+  justify-content: center;
+}
+
+.detalle-texto {
+  flex: 1 1 350px;
+}
+
+/* Diseño responsive para móviles */
+@media (max-width: 768px) {
+  .detalle-contenido {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .detalle-imagen,
+  .detalle-texto {
+    flex: 1 1 100%;
+  }
+
+  .detalle-texto {
+    margin-top: 1rem;
+  }
+}
+.btn-comprar {
+  background: linear-gradient(135deg, #ffb6d9, #cfe8ff);
+  border: none;
+  border-radius: 25px;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  font-weight: 700;
+  color: #333;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-comprar:hover {
+  background: linear-gradient(135deg, #ff9fcf, #b5d8ff);
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(173, 115, 115, 0.2);
+}
+.btn-comprar {
+  background-color: #cfe8ff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-comprar:hover {
+  background-color: #b5d8ff;
+  transform: scale(1.05);
+}
+.btn-comprar {
+  background: linear-gradient(135deg, #ffb6d9, #cfe8ff);
+  border: none;
+  border-radius: 25px;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  font-weight: 700;
+  color: #333;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-comprar:hover {
+  background: linear-gradient(135deg, #ff9fcf, #b5d8ff);
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+@media (max-width: 768px) {
+  .btn-comprar {
+    margin-bottom: 0.8rem; /* 🔧 separa los botones en móviles */
+  }
+}
+.detalle-texto h1 {
+  margin-bottom: 0.3rem; /* 🔧 reduce espacio debajo del título */
+}
+
+.detalle-texto .precio {
+  margin-top: 0.3rem; /* 🔧 acerca el precio al texto superior */
+}
+
+.detalle-texto p {
+  margin-top: 0.5rem; /* 🔧 mantiene el texto más cerca del precio */
+}
+@media (max-width: 768px) {
+  .detalle-texto h1 {
+    margin-top: 0.5rem; /* 🔧 reduce espacio superior del título */
+    margin-bottom: 0.2rem; /* 🔧 mantiene el texto compacto */
+  }
+
+  .detalle-texto .precio {
+    margin-top: 0.2rem;
+  }
+
+  .detalle-texto p {
+    margin-top: 0.4rem;
+  }
+}
+.logo-circular {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px; /* ocupa toda la altura de la pantalla */
+}
+
+.logo-circular img {
+  width: 200px; /* tamaño del logo */
+  height: 200px;
+  border-radius: 50%; /* lo hace circular */
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  background-color: #fff;
+  padding: 10px;
+}
+.icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* 🔧 separa los íconos */
+  margin-top: 0.5rem;
+}
+
+.icon {
+  font-size: 1.8rem;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.icon:hover {
+  transform: scale(1.2);
+}
+.menu-horizontal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffe6f0;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.menu-opciones {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto; /* scroll horizontal */
+  -webkit-overflow-scrolling: touch; /* scroll suave en móviles */
+  scrollbar-width: none; /* oculta barra en Firefox */
+}
+
+.menu-opciones::-webkit-scrollbar {
+  display: none; /* oculta barra en Chrome/Safari */
+}
+
+.menu-buscar {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  flex: 0 0 auto;
+  max-width: 200px;
+}
+
+/* Ajustes para móviles */
+@media (max-width: 768px) {
+  .menu-opciones {
+    gap: 10px;
+  }
+
+  .menu-buscar {
+    width: 120px;
+  }
+
+  .menu-opciones a,
+  .menu-desplegable {
+    flex: 0 0 auto;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  .menu-opciones a:hover {
+    background-color: #ffd6e0;
+  }
+}
+.menu-scroll {
+  margin-top: 15px;
+  background-color: #ffe6f0;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+/* Estilo general (computadoras y pantallas grandes) */
+.menu-opciones {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 15px;
+}
+
+.menu-opciones a,
+.menu-buscar {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.menu-buscar {
+  border: 1px solid #ccc;
+  width: 200px;
+}
+
+/* Ajustes para móviles */
+@media (max-width: 768px) {
+  .menu-opciones {
+    justify-content: flex-start;
+    overflow-x: auto; /* scroll horizontal */
+    -webkit-overflow-scrolling: touch; /* scroll suave */
+    scrollbar-width: none; /* oculta barra en Firefox */
+  }
+
+  .menu-opciones::-webkit-scrollbar {
+    display: none; /* oculta barra en Chrome/Safari */
+  }
+
+  .menu-buscar {
+    width: 150px;
+    flex: 0 0 auto;
+  }
+
+  .menu-opciones a {
+    flex: 0 0 auto; /* evita que se estiren */
+  }
+}
+
+.oculto {
+  display: none;
+}
+
+.seccion-productos {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.producto {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #ffe6f0;
+  border-radius: 8px;
+}
+/* <!--  ----------------------------------------------------- --> */
+/* Menú */
+.menu-barra {
+  background-color: #fde8f0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.menu-items {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.menu-items a {
+  text-decoration: none;
+  color: #4a0072;
+  background: #fff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.menu-items a:hover {
+  background-color: #f8d8e8;
+  transform: scale(1.05);
+}
+
+.menu-search {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  outline: none;
+  width: 180px;
+}
+
+/* Modal */
+.overlay-box {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.overlay-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  animation: fadeIn 0.3s ease;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.overlay-close {
+  float: right;
+  cursor: pointer;
+  font-size: 22px;
+  color: #4a0072;
+}
+
+.overlay-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.item-card {
+  background: #fdf6f9;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.item-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.btn-buy {
+  background-color: #4a0072;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-buy:hover {
+  background-color: #6a00a8;
+}
+
+/* <!--  ----------------------------------------------------- --> */
+ </style>
+
+
+<!-- /* --------------Aqui empieza el HTML--------------- */ -->
+
+</head>
+<body>
+  <header>
+    <div class="logo">
+        <div class="logo-circular">
+  <img src="logo-fotune.jpg.jpeg" alt="Logo Fortune" />
+</div>
+
+      <h1>Fortune_Ecu</h1>
+      <p></p>
+      <div class="icons">
+  <a href="https://www.instagram.com/fortune_ecu" target="_blank" class="icon">📸</a>
+  <a href="https://www.facebook.com/profile.php?id=61559043016392" target="_blank" class="icon">👍🏻</a>
+
+  <a href="https://www.tiktok.com/@fortune_ecu2?is_from_webapp=1&sender_device=pc" target="_blank" class="icon">🎵</a>
+</div>
+
+    </div>
+   <!--  ----------------------------------------------------- -->
+  <!-- Bloque de descripción -->
+<div class="descripcion">
+  <p>Tómale captura a tu producto favorito...</p>
+</div>
+
+<!-- Menú horizontal bajo la descripción -->
+<!-- Menú horizontal -->
+<div class="menu-barra">
+  <div class="menu-items">
+    <input type="text" placeholder="🔍 Buscar producto..." id="buscador" class="menu-search">
+
+    <a href="#" data-seccion="destacados">✨ Destacados</a>
+    <a href="#" data-seccion="mayoreo">💰 Precios al por mayor</a>
+    <a href="#" data-seccion="extras">🎀 Extras</a>
+    <a href="#" data-seccion="combos">🎨 Combos</a>
+  </div>
+</div>
+
+<!-- Modal oculto -->
+<div class="overlay-box">
+  <div class="overlay-content">
+    <span class="overlay-close">&times;</span>
+    <h2 id="titulo-seccion"></h2>
+    <div class="overlay-products"></div>
+  </div>
+</div>
+
+  <!--  ----------------------------------------------------- -->
+  <!-- Catálogo -->
+  <main class="catalogo" id="catalogo">
+    <div class="producto">
+      <img src="cuadro_spiderman.jpg.png" alt="Cuadro personalizado de Spiderman" onclick="mostrarDetalle('detalle-marvel')" />
+      <h3>Cuadros de Marvel🕷️💪🏻</h3>
+      <p class="precio">$8.50</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Cuadro%20de%20Marvel%20🌷🎀⭐" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+    </div>
+
+    <div class="producto">
+      <img src="vaso_con_sorbete.png" alt="Organizador de Makeup" onclick="mostrarDetalle('detalle-organizador')" />
+      <h3>Vaso con sorbete✨🧋</h3>
+      <p class="precio">$7.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Cuadro%20de%20Marvel%20🌷🎀⭐" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+    </div>
+  
+  <div class="producto">
+      <img src="caja_abierta.png" alt="caja abierta" onclick="mostrarDetalle('caja_abierta')" />
+      <h3>Caja Dulcera 🍫🍬</h3>
+      <p class="precio">$15.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20caja%20abierta" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+    </div>
+<div class="producto">
+      <img src="caja_personalizada1.png" alt="caja personalizada" onclick="mostrarDetalle('caja_personalizada')" />
+      <h3>Cajas Personalizadas 🎨📦</h3>
+      <p class="precio">$3.50</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20caja%20personalizada" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+    </div>
+    <div class="producto">
+      <img src="detalle_pequeño_con_rosa.png" alt="detalle pequeño con rosa" onclick="mostrarDetalle('detalle_pequeño_con_rosa')" />
+      <h3>Detalle Pequeño con Rosa </h3>
+      <p class="precio">$8.50</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20detalle%20pequeño%20con%20rosa" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+    </div>
+     <div class="producto">
+      <img src="vaso_personalizado.png" alt="vaso personalizado" onclick="mostrarDetalle('vaso_personalizado')" />
+      <h3>Vaso Personalizado </h3>
+      <p class="precio">$8.50</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20vaso%20personalizado" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="gafas_babyshower.png" alt="gafas babyshower" onclick="mostrarDetalle('gafas_babyshower')" />
+      <h3>Gafas Babyshower </h3>
+      <p class="precio">$8.50</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20gafas%20babyshower" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="cuadro_marco_giratorio.png" alt="cuadro marco giratorio" onclick="mostrarDetalle('cuadro_marco_giratorio')" />
+      <h3>Cuadro Marco Giratorio </h3>
+      <p class="precio">$8.50</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20cuadro%20marco%20giratorio" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto" >
+      <img src="cuadro_futbol.png" alt="cuadro futbol" onclick="mostrarDetalle('cuadro_futbol')" />
+      <h3>Cuadros 3D </h3>
+      <p class="precio">$8.50</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20cuadro%20futbol" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="cuadro_camisetas.png" alt="cuadro camisetas" onclick="mostrarDetalle('cuadro_camisetas')" />
+      <h3>Cuadro Camisetas  </h3>
+      <p class="precio">$8.50</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20cuadro%20camisetas%201" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+<div class="producto">
+      <img src="carros_personalizados.png" alt="carros personalizados" onclick="mostrarDetalle('carros_personalizados')" />
+      <h3>Carros Personalizados </h3>
+      <p class="precio">$8.50</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20carro%20personalizado" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="cuadro_hotwheels.png" alt="cuadro hotwheels" onclick="mostrarDetalle('cuadro_hotwheels')" />
+      <h3>Cuadro de Hotwheels </h3>
+      <p class="precio">$8.50</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20cuadro%20hotwheels" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+   <div class="producto">
+      <img src="vaso_vidrio_simple.png" alt="vaso vidrio simple" onclick="mostrarDetalle('vaso_vidrio_simple')" />
+      <h3>Vaso de vidrio sencillo</h3>
+      <p class="precio">$7.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20vaso%20de%20vidrio%20simple" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="joyero_personalizado.png" alt="joyero personalizado" onclick="mostrarDetalle('joyero_personalizado')" />
+      <h3>Joyero Personalizado</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20joyero%20personalizado" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="llavero_con_foto.png" alt="llavero con foto" onclick="mostrarDetalle('llavero_con_foto')" />
+      <h3>Llaveros con foto</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20llavero%20con%20foto" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="llavero_con_nombre.png" alt="llavero con nombre" onclick="mostrarDetalle('Llavero_con_nombre')" />
+      <h3>Llavero con nombre</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20llavero%20con%20nombre" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="Gafas_locas_para_fiesta.png" alt="Gafas locas para fiesta" onclick="mostrarDetalle('Gafas_locas_para_fiesta')" />
+      <h3>Gafas locas para fiesta</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Gafas%20locas%20para%20fiesta" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="stickers_para_tu_negocio.png" alt="Stickers para tu negocio" onclick="mostrarDetalle('Stickers_para_tu_negocio')" />
+      <h3>Stickers para tu negocio</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Stickers%20para%20tu%20negocio" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="Vasos_para_padrinos.png" alt="Vasos para padrinos" onclick="mostrarDetalle('Vasos_para_padrinos')" />
+      <h3>Vasos para padrinos</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Vasos%20para%20padrinos" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="Cuadro_de_madera_militar_3D.png" alt="Cuadro de madera militar 3D" onclick="mostrarDetalle('Cuadro_de_madera_militar_3D')" />
+      <h3>Cuadro de madera militar 3D</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Cuadro%20de%20madera%20militar%203D" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="Velas_personalizadas.png" alt="Velas personalizadas" onclick="mostrarDetalle('Velas_personalizadas')" />
+      <h3>Velas personalizadas</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20velas%20personalizadas" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+    </main>
+  
+
+
+  <!------------------------------ Páginas de detalle ------------------------------------------------->
+   <!-- CUADRO DE MARVEL -->
+ <section class="detalle" id="detalle-marvel">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="cuadro_spiderman.jpg.png" alt="Cuadro Marvel 1" class="activo">
+          <img src="cuadro_spiderman2.jpg.png" alt="Cuadro Marvel 2">
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('detalle-marvel', -1)">⬅️</button>
+          <button onclick="cambiarSlide('detalle-marvel', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+    <div class="detalle-texto">
+      <h1>Cuadro de Marvel 🕷️💪🏻🗡️</h1>
+      <p class="precio">$8.50</p>
+      <p>Tu héroe, tu estilo. Dale poder y personalidad a tu espacio con un diseño único inspirado en tus superhéroes favoritos. Perfecto para fans que buscan decoración épica.</p>
+     <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Cuadro%20de%20Marvel%20🌷🎀⭐" target="_blank" class="btn-comprar">Comprar ahora</a>
+<div class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</div>
+    </div>
+  </div>
+
+</section>
+<section class="detalle" id="detalle-marvel">
+  <div class="galeria" onclick="cambiarSlideClick('detalle-marvel')">
+    <div class="slides">
+      <img src="img/cuadrospiderman.jpg" alt="Cuadro Marvel 1" class="activo">
+      <img src="img/cuadrospiderman2.jpg" alt="Cuadro Marvel 2">
+    </div>
+  </div>
+  <h1>Cuadro de Marvel 🌷🎀⭐</h1>
+  <p class="precio">$8.50</p>
+  <p>Cuadros o portaretratos personalizados con tu superhéroe favorito. Ideal para decorar tu habitación o regalar a alguien especial.</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Cuadro%20de%20Marvel%20🌷🎀⭐" target="_blank" class="btn-comprar">Comprar ahora</a>
+  <div class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</div>
+</section>
+</section>
+
+
+<!-- ............................................ -->
+  <!-- VASO CON SORBETE -->
+<section class="detalle" id="detalle-organizador">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="vaso_con_sorbete.png" alt="Vaso con sorbete 1" class="activo">
+          <img src="vaso_con_sorbete1.png" alt="Vaso con sorbete 2">
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('detalle-organizador', -1)">⬅️</button>
+          <button onclick="cambiarSlide('detalle-organizador', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Vaso con sorbete✨🧋</h1>
+      <p class="precio">$6.00</p>
+      <p>Vaso de plástico personalizado, resistente y práctico, con sorbete incluido. Ideal para acompañarte en tu día a día con estilo y comodidad. Perfecto para regalar o disfrutar tu bebida favorita con un diseño único.</p>
+
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20vaso%20personalizado%20🌷🎀⭐" 
+         target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <div class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</div>
+    </div>
+  </div>
+</section>
+
+<!-- ------------------------------------------------------------ -->
+  <!-- CAJA ABIERTA -->
+<section class="detalle" id="caja_abierta">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="caja_abierta.png" alt="Caja abierta 1" class="activo">
+          <img src="caja_abierta2.png" alt="Caja abierta 2">
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('caja_abierta', -1)">⬅️</button>
+          <button onclick="cambiarSlide('caja_abierta', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Caja Dulcera 🍫🍬</h1>
+      <p class="precio">$15.00</p>
+      <p>Caja dulcera personalizada, perfecta para sorprender con estilo y dulzura. Diseñada para adaptarse a cualquier ocasión especial, combina resistencia, creatividad y un toque único que hará inolvidable tu regalo.</p>
+      
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20la%20Caja%20Dulcera%20🌷🎀⭐" 
+         target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+
+<!-- ------------------------------------------------------------ -->
+  <!-- CAJA PERSONALIZADA -->
+   <section class="detalle" id="caja_personalizada">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="caja_personalizada1.png" alt="Caja personalizada 1" class="activo">
+          <img src="caja_personalizada2.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada3.png" alt="Caja personalizada 2">
+        
+
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('caja_personalizada', -1)">⬅️</button>
+          <button onclick="cambiarSlide('caja_personalizada', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Caja personalizada</h1>
+      <p class="precio">$3.50</p>
+      <p>Caja personalizada diseñada para cada ocasión especial. Ideal para regalos únicos, detalles creativos o decoración con estilo propio. Disponible desde $3.50 en adelante, con opciones que se adaptan a tu presupuesto y necesidades.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20la%20Caja%20Personalizada%20🌷🎀⭐" 
+         target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ----------------------------------------------------------------------- -->
+  <!-- DETALLE PEQUEÑO CON ROSA -->
+<section class="detalle" id="detalle_pequeño_con_rosa">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="detalle_pequeño_con_rosa.png" alt="Detalle pequeño con rosa 1" class="activo">
+          <img src="detalle_pequeño_con_rosa2.png" alt="Detalle pequeño con rosa 2">
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('detalle_pequeño_con_rosa', -1)">⬅️</button>
+          <button onclick="cambiarSlide('detalle_pequeño_con_rosa', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Detalle pequeño con rosa</h1>
+      <p class="precio">$8.50</p>
+      <p>Cuadros o portaretratos personalizados con tu superhéroe favorito. Ideal para decorar tu habitación o regalar a alguien especial.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20el%20Detalle%20Pequeño%20con%20Rosa%20🌷🎀⭐" 
+         target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>  <!-- ----------------------------------------------------------------------- -->
+    <!-- VASO PERSONALIZADO -->
+    <section class="detalle" id="vaso_personalizado">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="vaso_personalizado.png" alt="Vaso personalizado 1" class="activo">
+          <img src="vaso_personalizado2.png" alt="Vaso personalizado 2">
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('vaso_personalizado', -1)">⬅️</button>
+          <button onclick="cambiarSlide('vaso_personalizado', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Vaso personalizado</h1>
+      <p class="precio">$8.50</p>
+      <p>Cuadros o portaretratos personalizados con tu superhéroe favorito. Ideal para decorar tu habitación o regalar a alguien especial.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20el%20Vaso%20Personalizado%20🌷🎀⭐" 
+         target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ----------------------------------------------------------------------- -->
+  <!-- GAFAS BABYSHOWER -->
+   <section class="detalle" id="gafas_babyshower">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="gafas_babyshower.png" alt="Gafas babyshower 1" class="activo">
+          <img src="gafas_babyshower2.png" alt="Gafas babyshower 2">
+          <img src="gafas_babyshower3.png" alt="Gafas babyshower 3">
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('gafas_babyshower', -1)">⬅️</button>
+          <button onclick="cambiarSlide('gafas_babyshower', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Gafas Babyshower</h1>
+      <p class="precio">$8.50</p>
+      <p>Cuadros o portaretratos personalizados con tu superhéroe favorito. Ideal para decorar tu habitación o regalar a alguien especial.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20las%20Gafas%20Babyshower%20🌷🎀⭐" 
+         target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ----------------------------------------------------------------------- -->
+  <!-- CUADRO MARCO GIRATORIO -->
+   <section class="detalle" id="cuadro_marco_giratorio">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="cuadro_marco_giratorio.png" alt="Cuadro marco giratorio 1" class="activo">
+          <img src="cuadro_marco_giratorio2.png" alt="Cuadro marco giratorio 2">
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('cuadro_marco_giratorio', -1)">⬅️</button>
+          <button onclick="cambiarSlide('cuadro_marco_giratorio', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Cuadro Marco Giratorio</h1>
+      <p class="precio">$8.50</p>
+      <p>Cuadros o portaretratos personalizados con tu superhéroe favorito. Ideal para decorar tu habitación o regalar a alguien especial.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20el%20Cuadro%20Marco%20Giratorio%20🌷🎀⭐" 
+         target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+   <!-- ----------------------------------------------------------------------- -->
+  <!-- CUADRO FUTBOL -->
+   <section class="detalle" id="cuadro_futbol">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="cuadro_futbol.png" alt="Cuadro futbol 1" class="activo">
+          <img src="cuadro_futbol1.png" alt="Cuadro futbol 2">
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('cuadro_futbol', -1)">⬅️</button>
+          <button onclick="cambiarSlide('cuadro_futbol', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Cuadro Futbol</h1>
+      <p class="precio">$8.50</p>
+      <p>Cuadros o portaretratos personalizados con tu superhéroe favorito. Ideal para decorar tu habitación o regalar a alguien especial.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20cuadro%20marco%20futbol" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+ <!-- ----------------------------------------------------------------------- -->
+  <!-- CUADRO CAMISETAS -->
+   <section class="detalle" id="cuadro_camisetas">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="cuadro_camisetas.png" alt="Cuadro camisetas 1" class="activo">
+          <img src="cuadro_camisetas1.png" alt="Cuadro camisetas 2">
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('cuadro_camisetas', -1)">⬅️</button>
+          <button onclick="cambiarSlide('cuadro_camisetas', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Cuadro Camisetas</h1>
+      <p class="precio">$8.50</p>
+      <p>Cuadros o portaretratos personalizados con tu superhéroe favorito. Ideal para decorar tu habitación o regalar a alguien especial.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20cuadro%20marco%20camisetas" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------------ -->
+  <!-- CARROS PERSONALIZADOS -->
+   <section class="detalle" id="carros_personalizados">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="carros_personalizados.png" alt="Carros personalizados 1" class="activo">
+          <img src="carros_personalizados1.png" alt="Carros personalizados 2">
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('carros_personalizados', -1)">⬅️</button>
+          <button onclick="cambiarSlide('carros_personalizados', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>carros personalizados</h1>
+      <p class="precio">$8.50</p>
+      <p>Cuadros o portaretratos personalizados con tu superhéroe favorito. Ideal para decorar tu habitación o regalar a alguien especial.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20carro%20personalizado" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </div>
+</section>
+   <!-- ------------------------------------------------------------------------------ -->
+    <!-- VASO DE VIDRIO SENCILLO -->
+     <section class="detalle" id="vaso_vidrio_simple">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="vaso_vidrio_simple.png" alt="Vaso de vidrio sencillo 1" class="activo">
+          <img src="vaso_vidrio_simple1.png" alt="Vaso de vidrio sencillo 2">
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('vaso_vidrio_simple', -1)">⬅️</button>
+          <button onclick="cambiarSlide('vaso_vidrio_simple', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Vaso de vidrio sencillo</h1>
+      <p class="precio">$7.00</p>
+      <p>Vasos de vidrio sencillos, perfectos para beber tu bebida favorita en estilo kawaii 💕</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20vaso%20de%20vidrio%20sencillo" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------ -->
+  <!-- JOYERO PERSONALIZADO -->
+     <section class="detalle" id="joyero_personalizado">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="joyero_personalizado.png" alt="Joyero personalizado 1" class="activo">
+          <img src="joyero_personalizado1.png" alt="Joyero personalizado 2">
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('joyero_personalizado', -1)">⬅️</button>
+          <button onclick="cambiarSlide('joyero_personalizado', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Joyero Personalizado</h1>
+      <p class="precio">$5.00</p>
+      <p>Joyero personalizado con el nombre que desees. Perfecta para regalar o usar tú mismo.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20joyero%20personalizado" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------------------- -->
+<!-- GAFAS LOCAS PARA FIESTA -->
+ <section class="detalle" id="Gafas_locas_para_fiesta">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="Gafas_locas_para_fiesta.png" alt="Gafas locas para fiesta 1" class="activo">
+          <img src="Gafas_locas_para_fiesta1.png" alt="Gafas locas para fiesta 2">
+          <img src="Gafas_locas_para_fiesta2.png" alt="Gafas locas para fiesta 2">
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Gafas_locas_para_fiesta', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Gafas_locas_para_fiesta', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Gafas locas para fiesta</h1>
+      <p class="precio">$10.00</p>
+      <p>Gafas locas para fiesta, ideales para agregar un toque de diversión a tu look.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20gafas%20locas%20para%20fiesta" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------------------------------------ -->
+<!--  STICKERS PARA TU NEGOCIO -->
+  <section class="detalle" id="Stickers_para_tu_negocio">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="Stickers_para_tu_negocio.png" alt="Stickers para tu negocio 1" class="activo">
+          <img src="Stickers_para_tu_negocio1.png" alt="Stickers para tu negocio 2">
+          <img src="Stickers_para_tu_negocio2.png" alt="Stickers para tu negocio 2">
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Stickers_para_tu_negocio', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Stickers_para_tu_negocio', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Stickers para tu negocio</h1>
+      <p class="precio">$10.00</p>
+      <p>Stickers para tu negocio, ideales para promocionar tu marca y agregar un toque de diversión a tu look.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20stickers%20para%20mi%20negocio" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------ -->
+  <!-- VASOS PARA PADRINOS -->
+   <section class="detalle" id="Vasos_para_padrinos">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="Vasos_para_padrinos.png" alt="Vasos para padrinos 1" class="activo">
+          <img src="Vasos_para_padrinos1.png" alt="Vasos para padrinos 2">
+          <img src="Vasos_para_padrinos2.png" alt="Vasos para padrinos 2">
+          <img src="Vasos_para_padrinos3.png" alt="Vasos para padrinos 3">
+          
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Vasos_para_padrinos', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Vasos_para_padrinos', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Vasos para padrinos</h1>
+      <p class="precio">$10.00</p>
+      <p>Vasos para padrinos, ideales para celebrar momentos especiales con un toque de diversión.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20vasos%20para%20padrinos" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+  <!-- ------------------------------------------------------------------------------ -->
+    <!-- CUADRO DE MADERA MILITAR 3D -->
+     <section class="detalle" id="Cuadro_de_madera_militar_3D">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="Cuadro_de_madera_militar_3D.png" alt="Cuadro de madera militar 3D 1" class="activo">
+          <img src="Cuadro_de_madera_militar_3D1.png" alt="Cuadro de madera militar 3D 2">
+          <img src="Cuadro_de_madera_militar_3D2.png" alt="Cuadro de madera militar 3D 2">
+         
+          
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Cuadro_de_madera_militar_3D', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Cuadro_de_madera_militar_3D', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Cuadro de madera militar 3D</h1>
+      <p class="precio">$10.00</p>
+      <p>Cuadro personalizado con muñeco tejido a mano inspirado en una fotografía especial. Un detalle único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20cuadros%20de%20madera%20militar%203D" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- --------------------------------------------------------------------------- -->
+ <!-- VELAS PERSONALIZADAS -->
+  <section class="detalle" id="Velas_personalizadas">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="Velas_personalizadas.png" alt="Velas personalizadas 1" class="activo">
+          <img src="Velas_personalizadas1.png" alt="Velas personalizadas 2">
+          <img src="Velas_personalizadas2.png" alt="Velas personalizadas 2">
+         
+          
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Velas_personalizadas', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Velas_personalizadas', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Velas personalizadas</h1>
+      <p class="precio">$10.00</p>
+      <p>Velas personalizadas con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20cuadros%20de%20madera%20militar%203D" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+
+    <p>© 2026 Fortune_Ecu · Diseño inspirado en estilo kawaii 💕</p>
+  </footer>
+<script>
+  const toggle = document.querySelector('.menu-toggle');
+  const opciones = document.querySelector('.menu-opciones');
+  toggle.addEventListener('click', () => {
+    opciones.style.display = opciones.style.display === 'flex' ? 'none' : 'flex';
+  });
+</script>
+
+  <script>
+    function verDetalles(nombre, descripcion) {
+      alert("📌 " + nombre + "\n\n" + descripcion);
+    }
+
+    function mostrarDetalle(id) {
+      const catalogo = document.getElementById("catalogo");
+      catalogo.style.opacity = "0";
+      setTimeout(() => {
+        catalogo.style.display = "none";
+        document.getElementById(id).classList.add("activo");
+      }, 500);
+    }
+    // Buscador en tiempo real
+document.getElementById('buscador').addEventListener('input', function() {
+  const texto = this.value.toLowerCase();
+  document.querySelectorAll('.producto').forEach(prod => {
+    prod.style.display = prod.textContent.toLowerCase().includes(texto) ? 'block' : 'none';
+  });
+});
+
+    function volverCatalogo() {
+      document.querySelectorAll(".detalle").forEach(d => d.classList.remove("activo"));
+      const catalogo = document.getElementById("catalogo");
+      catalogo.style.display = "grid";
+      setTimeout(() => {
+        catalogo.style.opacity = "1";
+      }, 50);
+    }
+    function cambiarSlide(detalleId, direccion) {
+  const detalle = document.getElementById(detalleId);
+  const imagenes = detalle.querySelectorAll(".slides img");
+  let indice = detalle.dataset.indice ? parseInt(detalle.dataset.indice) : 0;
+
+  imagenes[indice].classList.remove("activo");
+  indice += direccion;
+
+  if (indice < 0) indice = imagenes.length - 1;
+  if (indice >= imagenes.length) indice = 0;
+
+  imagenes[indice].classList.add("activo");
+  detalle.dataset.indice = indice;
+}
+
+/* /* --------------------------------------------------------------
+ */
+// Productos por categoría
+const productosPorSeccion = {
+  destacados: [
+    { nombre: "Caja decorativa", precio: "$12.00", imagen: "https://via.placeholder.com/150?text=Caja+decorativa" },
+    { nombre: "Taza personalizada", precio: "$8.50", imagen: "https://via.placeholder.com/150?text=Taza+personalizada" },
+    { nombre: "Agenda premium", precio: "$15.00", imagen: "https://via.placeholder.com/150?text=Agenda+premium" }
+  ],
+  mayoreo: [
+    { nombre: "Pack de 10 tazas", precio: "$70.00", imagen: "https://via.placeholder.com/150?text=Pack+de+10+tazas" },
+    { nombre: "Set de stickers", precio: "$25.00", imagen: "https://via.placeholder.com/150?text=Set+de+stickers" }
+  ],
+  extras: [
+    { nombre: "Moño decorativo", precio: "$2.00", imagen: "https://via.placeholder.com/150?text=Moño+decorativo" },
+    { nombre: "Etiqueta personalizada", precio: "$1.50", imagen: "https://via.placeholder.com/150?text=Etiqueta+personalizada" }
+  ],
+  combos: [
+    { nombre: "Moño decorativo", precio: "$2.00", imagen: "https://via.placeholder.com/150?text=Moño+decorativo" },
+    { nombre: "Etiqueta personalizada", precio: "$1.50", imagen: "https://via.placeholder.com/150?text=Etiqueta+personalizada" }
+    ]
+};
+
+// Abrir modal al hacer clic
+document.querySelectorAll('.menu-items a').forEach(opcion => {
+  opcion.addEventListener('click', e => {
+    e.preventDefault();
+    const seccion = e.target.dataset.seccion;
+    const texto = e.target.textContent.trim();
+
+    document.getElementById('titulo-seccion').innerHTML = texto;
+
+    // Generar productos dinámicamente
+    const productosHTML = productosPorSeccion[seccion].map(p => `
+      <div class="item-card">
+        <img src="${p.imagen}" alt="${p.nombre}">
+        <h3>${p.nombre}</h3>
+        <p>${p.precio}</p>
+        <button class="btn-buy" onclick="window.open('https://wa.me/593000000000?text=Hola, quiero comprar ${p.nombre}', '_blank')">Comprar ahora</button>
+      </div>
+    `).join('');
+
+    document.querySelector('.overlay-products').innerHTML = productosHTML;
+    document.querySelector('.overlay-box').style.display = "flex";
+  });
+});
+
+// Cerrar modal
+document.querySelector('.overlay-close').onclick = () => {
+  document.querySelector('.overlay-box').style.display = "none";
+};
+
+// Cerrar al hacer clic fuera del contenido
+window.onclick = e => {
+  if (e.target.classList.contains("overlay-box")) {
+    document.querySelector('.overlay-box').style.display = "none";
+  }
+};
+
+/* -------------------------------------------------------------- */
+
+
+    
+  </script>
+</body>
+</html>
+
