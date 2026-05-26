@@ -583,6 +583,169 @@
 .btn-buy:hover {
   background-color: #6a00a8;
 }
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #fdf6f9;
+  color: #4a0072;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-scroll {
+  background-color: #fde8f0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.menu-opciones {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.menu-opciones a {
+  text-decoration: none;
+  color: #4a0072;
+  background: #fff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.menu-opciones a:hover {
+  background-color: #f8d8e8;
+  transform: scale(1.05);
+}
+
+.menu-buscar {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  outline: none;
+  width: 180px;
+}
+
+/* Modal */
+.pantalla {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.contenido {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  animation: fadeIn 0.3s ease;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+#cerrar {
+  float: right;
+  cursor: pointer;
+  font-size: 22px;
+  color: #4a0072;
+}
+
+/* === Estilo general conservando tu diseño actual === */
+#productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.producto {
+  background: #fdf6f9; /* tono rosado suave */
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.producto:hover {
+  transform: scale(1.03);
+}
+
+.producto img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.producto h3 {
+  color: #4a0072;
+  font-weight: 600;
+  margin: 10px 0 5px;
+}
+
+.producto p {
+  color: #4a0072;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.btn-comprar {
+  background-color: #4a0072;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-comprar:hover {
+  background-color: #6a00a8;
+}
+
+/* === Responsivo sin cambiar estilo === */
+@media (max-width: 768px) {
+  #productos {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .contenido {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .btn-comprar {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+  }
+}
+#detalleProducto .contenido {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+}
+
+#detalleImagenes img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
 
 /* <!--  ----------------------------------------------------- --> */
  </style>
@@ -609,30 +772,34 @@
 
     </div>
    <!--  ----------------------------------------------------- -->
-  <!-- Bloque de descripción -->
-<div class="descripcion">
-  <p>Tómale captura a tu producto favorito...</p>
-</div>
-
-<!-- Menú horizontal bajo la descripción -->
-<!-- Menú horizontal -->
-<div class="menu-barra">
-  <div class="menu-items">
-    <input type="text" placeholder="🔍 Buscar producto..." id="buscador" class="menu-search">
+  <!-- Menú horizontal bajo la descripción -->
+<div class="menu-scroll">
+  <div class="menu-opciones">
+    <input type="text" placeholder="🔍 Buscar producto..." id="buscador" class="menu-buscar">
 
     <a href="#" data-seccion="destacados">✨ Destacados</a>
     <a href="#" data-seccion="mayoreo">💰 Precios al por mayor</a>
     <a href="#" data-seccion="extras">🎀 Extras</a>
-    <a href="#" data-seccion="combos">🎨 Combos</a>
+    <a href="#" data-seccion="combos">🎀 Combos</a>
+    <a href="#" data-seccion="combos">🎉  Fiesta</a>
   </div>
 </div>
 
 <!-- Modal oculto -->
-<div class="overlay-box">
-  <div class="overlay-content">
-    <span class="overlay-close">&times;</span>
+<div id="pantalla" class="pantalla">
+  <div class="contenido">
+    <span id="cerrar">&times;</span>
     <h2 id="titulo-seccion"></h2>
-    <div class="overlay-products"></div>
+    <div id="productos"></div>
+  </div>
+</div>
+<!-- Modal de detalle de producto -->
+<div id="detalleProducto" class="pantalla">
+  <div class="contenido">
+    <span id="cerrarDetalle">&times;</span>
+    <h2 id="detalleTitulo"></h2>
+    <div id="detalleImagenes"></div>
+    <p id="detalleDescripcion"></p>
   </div>
 </div>
 
@@ -648,8 +815,30 @@
     </div>
 
     <div class="producto">
+      <img src="cuadro_spotify_con_rosas_encapsuladas.png" alt="Cuadro de Spotify con rosas encapsuladas" onclick="mostrarDetalle('cuadro_spotify_con_rosas_encapsuladas')" />
+      <h3>Cuadro de Spotify con rosas encapsuladas</h3>
+      <p class="precio">$15.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20cuadro%20de%20Spotify%20con%20rosas%20encapsuladas" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+    </div>
+    <div class="producto">
+      <img src="cuadro_para_mascota.png" alt="Cuadro para mascota" onclick="mostrarDetalle('cuadro_para_mascota')" />
+      <h3>Cuadro para mascota</h3>
+      <p class="precio">$15.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20cuadro%20para%20mascota" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+    </div>
+    <div class="producto">
+  <img src="cuadro_doble_para_padrinos.png" alt="Cuadro doble para padrinos" onclick="mostrarDetalle('cuadro_doble_para_padrinos')" />
+  <h3>Cuadro doble para padrinos</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Cuadro%20Doble%20para%20Padrinos" 
+     target="_blank" class="btn-comprar">Comprar ahora</a>
+</div> 
+
+    <div class="producto">
       <img src="vaso_con_sorbete.png" alt="Organizador de Makeup" onclick="mostrarDetalle('detalle-organizador')" />
-      <h3>Vaso con sorbete✨🧋</h3>
+      <h3>Vasos con Nombre✨🧋</h3>
       <p class="precio">$7.00</p>
       <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Cuadro%20de%20Marvel%20🌷🎀⭐" target="_blank" class="btn-comprar">Comprar ahora</a>
       </a>
@@ -691,6 +880,13 @@
       </a>
       </div>
       <div class="producto">
+      <img src="gafas_nombre+año.png" alt="gafas nombre+año" onclick="mostrarDetalle('gafas_nombre+año')" />
+      <h3>Gafas Nombre+Año </h3>
+      <p class="precio">$8.50</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20gafas%20nombre+año" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
       <img src="cuadro_marco_giratorio.png" alt="cuadro marco giratorio" onclick="mostrarDetalle('cuadro_marco_giratorio')" />
       <h3>Cuadro Marco Giratorio </h3>
       <p class="precio">$8.50</p>
@@ -699,14 +895,14 @@
       </div>
       <div class="producto" >
       <img src="cuadro_futbol.png" alt="cuadro futbol" onclick="mostrarDetalle('cuadro_futbol')" />
-      <h3>Cuadros 3D </h3>
+      <h3>✨ Cuadro Deportivo 3D </h3>
       <p class="precio">$8.50</p>
       <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20cuadro%20futbol" target="_blank" class="btn-comprar">Comprar ahora</a>
       </a>
       </div>
       <div class="producto">
       <img src="cuadro_camisetas.png" alt="cuadro camisetas" onclick="mostrarDetalle('cuadro_camisetas')" />
-      <h3>Cuadro Camisetas  </h3>
+      <h3>Cuadro Camisetas 3D </h3>
       <p class="precio">$8.50</p>
       <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20cuadro%20camisetas%201" target="_blank" class="btn-comprar">Comprar ahora</a>
       </a>
@@ -741,7 +937,7 @@
       </div>
       <div class="producto">
       <img src="llavero_con_foto.png" alt="llavero con foto" onclick="mostrarDetalle('llavero_con_foto')" />
-      <h3>Llaveros con foto</h3>
+      <h3>Llavero con foto</h3>
       <p class="precio">$5.00</p>
       <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20llavero%20con%20foto" target="_blank" class="btn-comprar">Comprar ahora</a>
       </a>
@@ -788,10 +984,195 @@
       <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20velas%20personalizadas" target="_blank" class="btn-comprar">Comprar ahora</a>
       </a>
       </div>
+      <div class="producto">
+      <img src="bautizo.png" alt="Bautizo" onclick="mostrarDetalle('bautizo')" />
+      <h3>Velas para bautizo</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20velas%20personalizadas%20para%20bautizo" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+            <div class="producto">
+      <img src="vasos_para_graduacion.png" alt="Vasos para graduación" onclick="mostrarDetalle('Vasos_para_graduacion')" />
+      <h3>Vasos para graduación</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20vasos%20para%20graduación" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="Cuadros_con nombre_3D.png" alt="Cuadros con nombre 3D" onclick="mostrarDetalle('Cuadros_con_nombre_3D')" />
+      <h3>Cuadros con nombre 3D</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20cuadros%20con%20nombre%203D" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+<div class="producto">
+      <img src="box_1.png" alt="Box #1" onclick="mostrarDetalle('Box_1')" />
+      <h3>Box #1</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%231" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="box2.png" alt="Box #2" onclick="mostrarDetalle('Box_2')" />
+      <h3>Box #2</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%232" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="frases_en_vinil.png" alt="Frases en vinil" onclick="mostrarDetalle('frases_en_vinil')" />
+      <h3>Frases en vinil</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20frases%20en%20vinil" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="box3.png" alt="Box #3" onclick="mostrarDetalle('Box_3')" />
+      <h3>Box #3</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%233" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="box4.png" alt="Box #4" onclick="mostrarDetalle('Box_4')" />
+      <h3>Box #4</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%234" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="box5.png" alt="Box #5" onclick="mostrarDetalle('Box_5')" />
+      <h3>Box #5</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%235" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="box6.png" alt="Box #6" onclick="mostrarDetalle('Box_6')" />
+      <h3>Box #6</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%236" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+       <div class="producto">
+      <img src="box7.png" alt="Box #7" onclick="mostrarDetalle('Box_7')" />
+      <h3>Box #7</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%237" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="box8.png" alt="Box #8" onclick="mostrarDetalle('Box_8')" />
+      <h3>Box #8</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%238" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="box9.png" alt="Box #9" onclick="mostrarDetalle('Box_9')" />
+      <h3>Box #9</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%238" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="box10.png" alt="Box #10" onclick="mostrarDetalle('Box_10')" />
+      <h3>Box #10</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%2310" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="box11.png" alt="Box #11" onclick="mostrarDetalle('Box_11')" />
+      <h3>Box #11</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%2311" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+     
+      <div class="producto">
+      <img src="Topper.png" alt="Topper" onclick="mostrarDetalle('Topper')" />
+      <h3>Topper</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Topper" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="Toppers.png" alt="Toppers" onclick="mostrarDetalle('Toppers')" />
+      <h3>Mini Toppers</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Topper" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="banderines.png" alt="banderines" onclick="mostrarDetalle('banderines')" />
+      <h3>Banderines</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Banderin" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="portarretrato_para_toda _ocasion.png" alt="portarretrato para toda ocasion" onclick="mostrarDetalle('portarretrato_para_toda_ocasion')" />
+      <h3>Portarretrato para toda ocasion</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Portarretrato%20para%20Toda%20Ocasión" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+<div class="producto">
+      <img src="copa_personalizada.png" alt="Copa personalizada" onclick="mostrarDetalle('copa_personalizada')" />
+      <h3>Copa personalizada</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Copa%20Personalizada" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+       <div class="producto">
+      <img src="letras_personalizadas.png" alt="Letras personalizadas" onclick="mostrarDetalle('letras_personalizadas')" />
+      <h3>Letras personalizadas</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Letra%20Personalizada" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="fotos_inmantadas.png" alt="Fotos inmantadas" onclick="mostrarDetalle('fotos_inmantadas')" />
+      <h3>Fotos inmantadas</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Foto%20Inmantada" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="pulseras_para_compartir.png" alt="Pulseras para compartir" onclick="mostrarDetalle('pulseras_para_compartir')" />
+      <h3>Pulseras para compartir</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Pulsera%20para%20Compartir" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+  <img src="pulsera_tejida.png" alt="Pulsera tejida" onclick="mostrarDetalle('pulsera_tejida')" />
+  <h3>Pulsera tejida</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20una%20Pulsera%20tejida" 
+     target="_blank" class="btn-comprar">Comprar ahora</a>
+</div> 
+<div class="producto">
+  <img src="pulseras_para_hombre.png" alt="Pulseras para hombre" onclick="mostrarDetalle('pulseras_para_hombre')" />
+  <h3>Pulseras para hombre</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20una%20Pulsera%20para%20Hombre" 
+     target="_blank" class="btn-comprar">Comprar ahora</a>
+</div> 
+
+     
+      
+     
+      
+      
+   
+   
+   
+   
+   
+   
     </main>
-  
-
-
   <!------------------------------ Páginas de detalle ------------------------------------------------->
    <!-- CUADRO DE MARVEL -->
  <section class="detalle" id="detalle-marvel">
@@ -843,6 +1224,8 @@
         <div class="slides">
           <img src="vaso_con_sorbete.png" alt="Vaso con sorbete 1" class="activo">
           <img src="vaso_con_sorbete1.png" alt="Vaso con sorbete 2">
+          <img src="vasos_con_sorbete2.png" alt="Vaso con sorbete 2">
+
         </div>
         <div class="controles">
           <button onclick="cambiarSlide('detalle-organizador', -1)">⬅️</button>
@@ -852,7 +1235,7 @@
     </div>
 
     <div class="detalle-texto">
-      <h1>Vaso con sorbete✨🧋</h1>
+      <h1>Vasos con Nombre✨🧋</h1>
       <p class="precio">$6.00</p>
       <p>Vaso de plástico personalizado, resistente y práctico, con sorbete incluido. Ideal para acompañarte en tu día a día con estilo y comodidad. Perfecto para regalar o disfrutar tu bebida favorita con un diseño único.</p>
 
@@ -907,6 +1290,19 @@
           <img src="caja_personalizada1.png" alt="Caja personalizada 1" class="activo">
           <img src="caja_personalizada2.png" alt="Caja personalizada 2">
           <img src="caja_personalizada3.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada4.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada5.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada6.png" alt="Caja personalizada 2">
+          <img src="caja_personzalizada7.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada8.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada_9.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada10.png" alt="Caja personalizada 2">
+          <img src="cajas_personalizada11.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada12.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada13.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada14 (2).png" alt="Caja personalizada 2">
+          <img src="caja_personalizada15.png" alt="Caja personalizada 2">
+
         
 
         </div>
@@ -969,7 +1365,9 @@
       <div class="galeria">
         <div class="slides">
           <img src="vaso_personalizado.png" alt="Vaso personalizado 1" class="activo">
-          <img src="vaso_personalizado2.png" alt="Vaso personalizado 2">
+         
+          <img src="vaso_personalizado31.png" alt="Vaso personalizado 2">
+          <img src="vaso_personalizado4.png" alt="Vaso personalizado 2">
         </div>
         <div class="controles">
           <button onclick="cambiarSlide('vaso_personalizado', -1)">⬅️</button>
@@ -1032,7 +1430,7 @@
       <div class="galeria">
         <div class="slides">
           <img src="cuadro_marco_giratorio.png" alt="Cuadro marco giratorio 1" class="activo">
-          <img src="cuadro_marco_giratorio2.png" alt="Cuadro marco giratorio 2">
+          <img src="cuadro_marco_giratorio1.png" alt="Cuadro marco giratorio 2">
         </div>
         <div class="controles">
           <button onclick="cambiarSlide('cuadro_marco_giratorio', -1)">⬅️</button>
@@ -1056,7 +1454,7 @@
   </div>
 </section>
    <!-- ----------------------------------------------------------------------- -->
-  <!-- CUADRO FUTBOL -->
+  <!-- ✨ Cuadro Deportivo 3D -->
    <section class="detalle" id="cuadro_futbol">
   <div class="detalle-contenido">
     <div class="detalle-imagen">
@@ -1075,7 +1473,7 @@
     </div>
 
     <div class="detalle-texto">
-      <h1>Cuadro Futbol</h1>
+      <h1>✨ Cuadro Deportivo 3D</h1>
       <p class="precio">$8.50</p>
       <p>Cuadros o portaretratos personalizados con tu superhéroe favorito. Ideal para decorar tu habitación o regalar a alguien especial.</p>
 
@@ -1107,7 +1505,7 @@
     </div>
 
     <div class="detalle-texto">
-      <h1>Cuadro Camisetas</h1>
+      <h1>✨ Cuadro Camisetas 3D</h1>
       <p class="precio">$8.50</p>
       <p>Cuadros o portaretratos personalizados con tu superhéroe favorito. Ideal para decorar tu habitación o regalar a alguien especial.</p>
 
@@ -1219,32 +1617,71 @@
   </div>
 </section>
 <!-- ------------------------------------------------------------------------------- -->
-<!-- GAFAS LOCAS PARA FIESTA -->
- <section class="detalle" id="Gafas_locas_para_fiesta">
+ <!-- LLAVEROS CON FOTO -->
+  <section class="detalle" id="llavero_con_foto">
   <div class="detalle-contenido">
     <div class="detalle-imagen">
       <div class="galeria">
         <div class="slides">
-          <img src="Gafas_locas_para_fiesta.png" alt="Gafas locas para fiesta 1" class="activo">
-          <img src="Gafas_locas_para_fiesta1.png" alt="Gafas locas para fiesta 2">
-          <img src="Gafas_locas_para_fiesta2.png" alt="Gafas locas para fiesta 2">
+          <img src="llavero_con_foto.png" alt="Llavero con foto 1" class="activo">
+          <img src="llavero_con_foto1.png" alt="Llavero con foto 2">
+          <img src="llavero_con_foto2.png" alt="Llavero con foto 2">
+          <img src="llavero_con_foto3.png" alt="Llavero con foto 2">
+          <img src="llavero_con_foto4.png" alt="Llavero con foto 2">
+          <img src="llavero_con_foto5.png" alt="Llavero con foto 2">
+
+        
           
           
         </div>
         <div class="controles">
-          <button onclick="cambiarSlide('Gafas_locas_para_fiesta', -1)">⬅️</button>
-          <button onclick="cambiarSlide('Gafas_locas_para_fiesta', 1)">➡️</button>
+          <button onclick="cambiarSlide('llavero_con_foto', -1)">⬅️</button>
+          <button onclick="cambiarSlide('llavero_con_foto', 1)">➡️</button>
         </div>
       </div>
     </div>
 
     <div class="detalle-texto">
-      <h1>Gafas locas para fiesta</h1>
+      <h1>Llavero con foto</h1>
       <p class="precio">$10.00</p>
-      <p>Gafas locas para fiesta, ideales para agregar un toque de diversión a tu look.</p>
+      <p>Llavero con foto, ideales para agregar un toque de diversión a tu look.</p>
 
       <!-- Botón de compra -->
-      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20gafas%20locas%20para%20fiesta" target="_blank" class="btn-comprar">Comprar ahora</a>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20llavero%20con%20foto" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------------------ -->
+<!-- GAFAS LOCAS PARA FIESTA -->
+ <section class="detalle" id="llavero_con_foto">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="llavero_con_foto.png" alt="Llavero con foto 1" class="activo">
+          <!-- <img src="llavero_con_foto1.png" alt="Llavero con foto 2">
+          <img src="llavero_con_foto2.png" alt="Llavero con foto 2">
+           -->
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('llavero_con_foto', -1)">⬅️</button>
+          <button onclick="cambiarSlide('llavero_con_foto', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Llavero con foto</h1>
+      <p class="precio">$10.00</p>
+      <p>Llavero con foto, ideales para agregar un toque de diversión a tu look.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20llaveros%20con%20foto" target="_blank" class="btn-comprar">Comprar ahora</a>
 
       <!-- Botón volver -->
       <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
@@ -1261,6 +1698,8 @@
           <img src="Stickers_para_tu_negocio.png" alt="Stickers para tu negocio 1" class="activo">
           <img src="Stickers_para_tu_negocio1.png" alt="Stickers para tu negocio 2">
           <img src="Stickers_para_tu_negocio2.png" alt="Stickers para tu negocio 2">
+          <img src="stickers_para_tu_negocio3.png" alt="Stickers para tu negocio 3">
+          <img src="sticker_para_tu_negocio4.png" alt="Stickers para tu negocio 4">
           
           
         </div>
@@ -1364,6 +1803,7 @@
           <img src="Velas_personalizadas.png" alt="Velas personalizadas 1" class="activo">
           <img src="Velas_personalizadas1.png" alt="Velas personalizadas 2">
           <img src="Velas_personalizadas2.png" alt="Velas personalizadas 2">
+          <img src="Velas_personalizadas3.png" alt="Velas personalizadas 2">
          
           
           
@@ -1389,10 +1829,949 @@
     </div>
   </div>
 </section>
+<!-- -------------------------------------------------------------------------- -->
+ <!--  BAUTIZO -->
+    <section class="detalle" id="bautizo">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="bautizo.png" alt="Bautizo 1" class="activo">
+          <img src="bautizo1.png" alt="Bautizo 2">
+          
+        
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('bautizo', -1)">⬅️</button>
+          <button onclick="cambiarSlide('bautizo', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
 
+    <div class="detalle-texto">
+      <h1>velas para bautizo</h1>
+      <p class="precio">$8.50</p>
+      <p>Velas para bautizo con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Bautizo" target="_blank" class="btn-comprar">Comprar ahora</a>
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- --------------------------------------------------------------------------- -->
+
+  <!-- VASOS PARA GRADUACION -->
+   <section class="detalle" id="Vasos_para_graduacion">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="Vasos_para_graduacion.png" alt="Vasos para graduación 1" class="activo">
+          <img src="Vasos_para_graduacion1.png" alt="Vasos para graduación 2">
+          <img src="Vasos_para_graduacion2.png" alt="Vasos para graduación 2">
+         
+          
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Vasos_para_graduacion', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Vasos_para_graduacion', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Vasos para graduación</h1>
+      <p class="precio">$10.00</p>
+      <p>Vasos para graduación con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20vaso%20para%20graduación" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ----------------------------------------------------------- -->
+  <!-- CUADROS CON NOMBRE 3D -->
+   <section class="detalle" id="Cuadros_con_nombre_3D">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="Cuadros_con nombre_3D1.png" alt="Cuadros con nombre 3D 1" class="activo">
+        <img src="Cuadros_con nombre_3D.png" alt="Cuadro con nombre 3D 2">
+         <img src="Cuadros_con nombre_3D2.png" alt="Cuadro con nombre 3D 2">
+         <img src="Cuadros_con nombre_3D3.png" alt="Cuadro con nombre 3D 3">
+         <img src="Cuadros_con nombre_3D4.png" alt="Cuadro con nombre 3D 3">
+         <img src="Cuadros_con nombre_3D5.png" alt="Cuadro con nombre 3D 3">
+         <img src="Cuadros_con nombre_3D6.png" alt="Cuadro con nombre 3D 3">
+
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Cuadros_con_nombre_3D', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Cuadros_con_nombre_3D', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Cuadros con nombre 3D</h1>
+      <p class="precio">$10.00</p>
+      <p>Cuadros con nombre 3D con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20cuadros%20de%20madera%20militar%203D" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- -------------------------------------------------------------------------------- -->
+  <!-- BOX #1 -->
+   <section class="detalle" id="Box_1">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box_1.png" alt="Box #1 1" class="activo">
+        
+         
+          
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_1', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_1', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #1</h1>
+      <p class="precio">$10.00</p>
+      <p>Box #1 con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%231" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ----------------------------------------------------------------------------------- -->
+  <!-- BOX #2 -->
+   <section class="detalle" id="Box_2">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box2.png" alt="Box 2" class="activo">
+          <img src="box21.png" alt="Box #2">
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_2', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_2', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #2</h1>
+      <p class="precio">$10.00</p>
+      <p>Box #2 con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%232" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ---------------------------------------------------------------------------------------------> 
+  <!-- Frases en vinil -->
+    <section class="detalle" id="frases_en_vinil">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="frases_en_vinil.png" alt="frases en vinil" class="activo">
+          <img src="frases_en_vinil1.png" alt="frases en vinil">
+          <img src="frases_en_vinil2.png" alt="frases en vinil">
+          <img src="frases_en_vinil3.png" alt="frases en vinil">
+          <img src="frases_en_vinil4.png" alt="frases en vinil">
+          
+         
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('frases_en_vinil', -1)">⬅️</button>
+          <button onclick="cambiarSlide('frases_en_vinil', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Frases en vinil</h1>
+      <p class="precio">$10.00</p>
+      <p>Frases en vinil con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20frases%20en%20vinil" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ----------------------------------------------------------------------------------- -->
+  <!-- BOX #3 -->
+   <section class="detalle" id="Box_3">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box3.png" alt="Box 3" class="activo">
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_3', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_3', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #3</h1>
+      <p class="precio">$10.00</p>
+      <p>Box #3 con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%233" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- -------------------------------------------------------------------- -->
+  <!-- BOX #4 -->
+   <section class="detalle" id="Box_4">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box4.png" alt="Box 4" class="activo">
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_4', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_4', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #4</h1>
+      <p class="precio">$10.00</p>
+      <p>Box #4 con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%234" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- -------------------------------------------------------------------- -->
+  <!-- BOX #5 -->
+   <section class="detalle" id="Box_5">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box5.png" alt="Box 5" class="activo">
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_5', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_5', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #5</h1>
+      <p class="precio">$10.00</p>
+      <p>Box #5 con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%235" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- -------------------------------------------------------------------- -->
+  <!-- BOX #6 -->
+   <section class="detalle" id="Box_6">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box6.png" alt="Box 6" class="activo">
+          <img src="box61.png" alt="Box 6 - Imagen 2">
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_6', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_6', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #6</h1>
+      <p class="precio">$10.00</p>
+      <p>Box #6 con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%236" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------------------- -->
+ <!-- BOX #7 -->
+  <section class="detalle" id="Box_7">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box7.png" alt="Box 7" class="activo">
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_7', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_7', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #7</h1>
+      <p class="precio">$10.00</p>
+      <p>Box #7 con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%237" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- -------------------------------------------------------------------- -->
+ <!-- BOX #8 -->
+  <section class="detalle" id="Box_8">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box8.png" alt="Box 8" class="activo">
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_8', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_8', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #8</h1>
+      <p class="precio">$10.00</p>
+      <p>Box #8 con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%238" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- -------------------------------------------------------------------------------- -->
+ <!-- BOX #9 -->
+  <section class="detalle" id="Box_9">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box9.png" alt="Box 9" class="activo">
+          <img src="box91.png" alt="Box #9">
+          <img src="box92.png" alt="Box #9">
+      
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_9', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_9', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #9</h1>
+      <p class="precio">$10.00</p>
+      <p>Box #9 con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%239" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------------------- -->
+ <!-- BOX 10 -->
+  <section class="detalle" id="Box_10">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box10.png" alt="Box 10" class="activo">
+          <img src="box101.png" alt="Box 10">
+
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_10', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_10', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #10</h1>
+      <p class="precio">$10.00</p>
+      <p>Box #10 con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%2310" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+  <!-- -------------------------------------------------------------------------------- -->
+    <!-- BOX #11 --> 
+     <section class="detalle" id="Box_11">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box11.png" alt="Box 11" class="activo">
+          <img src="box111.png" alt="Box 11">
+
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_11', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_11', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #11</h1>
+      <p class="precio">$10.00</p>
+      <p>Box #11 con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%2311" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+
+ <!-- GAFAS NOMBRE+AÑO -->
+  <section class="detalle" id="gafas_nombre+año">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="gafas_nombre+año.png" alt="gafas nombre+año 1" class="activo">
+          <img src="gafas_nombre+año1.png" alt="gafas nombre+año 2">
+          
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('gafas_nombre+año', -1)">⬅️</button>
+          <button onclick="cambiarSlide('gafas_nombre+año', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Gafas Nombre+Año</h1>
+      <p class="precio">$8.50</p>
+      <p>Gafas Nombre+Año con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Gafas%20Nombre+Año" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------------------- -->
+<!--  TOPPER -->
+  <section class="detalle" id="Topper">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="Topper.png" alt="Topper 1" class="activo">
+          <img src="Topper1.png" alt="Topper 2">
+           <img src="Topper2.png" alt="Topper 3">
+
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Topper', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Topper', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Topper</h1>
+      <p class="precio">$8.50</p>
+      <p>Topper con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Topper" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- -------------------------------------------------------------------------------- -->
+ <!-- TOPPERS -->
+  <section class="detalle" id="Toppers">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="Toppers.png" alt="Topper 1" class="activo">
+          <img src="Toppers1.png" alt="Topper 2">
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Toppers', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Toppers', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Mini Toppers</h1>
+      <p class="precio">$8.50</p>
+      <p>Topper con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Topper" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- -------------------------------------------------------------------------------- -->
+ <!-- BANDERINES -->
+  <section class="detalle" id="banderines">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="banderines.png" alt="Banderines 1" class="activo">
+          <img src="banderines1.png" alt="Banderines 2">
+          <img src="banderines2.png" alt="Banderines 3">
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('banderines', -1)">⬅️</button>
+          <button onclick="cambiarSlide('banderines', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Banderines</h1>
+      <p class="precio">$8.50</p>
+      <p>Banderines con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Banderin" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- -------------------------------------------------------------------- -->
+ <!-- PORTARRETRATO PARA TODA OCASION -->
+  <section class="detalle" id="portarretrato_para_toda_ocasion">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="portarretrato_para_toda _ocasion.png" alt="portarretrato para toda ocasion 1" class="activo">
+          <img src="portarretratos_para_toda _ocasion1.png" alt="portarretratos para toda ocasion 2">
+          <img src="portarretrato_para_toda _ocasion2.png" alt="portarretratos para toda ocasion 2">
+          <img src="portarretrato_para_toda _ocasion4.png" alt="portarretratos para toda ocasion 2">
+          <img src="portarretrato_para_toda _ocasion5.png" alt="portarretratos para toda ocasion 2">
+       
+        </div>
+  
+        <div class="controles">
+          <button onclick="cambiarSlide('portarretrato_para_toda_ocasion', -1)">⬅️</button>
+          <button onclick="cambiarSlide('portarretrato_para_toda_ocasion', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Portarretrato para toda ocasión</h1>
+      <p class="precio">$8.50</p>
+      <p>Portarretrato con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Portarretrato%20para%20Toda%20Ocasión" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------------------------------ -->
+ <!-- COPA PERSONALIZADA -->
+  <section class="detalle" id="copa_personalizada">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="copa_personalizada.png" alt="Copa personalizada 1" class="activo">
+        
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('copa_personalizada', -1)">⬅️</button>
+          <button onclick="cambiarSlide('copa_personalizada', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Copa personalizada</h1>
+      <p class="precio">$8.50</p>
+      <p>Copa con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Copa%20Personalizada" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------------------------------ -->
+ <!-- CUADRO DE SPOTIFY CON ROSAS ENCAPSULADAS -->
+  <section class="detalle" id="cuadro_spotify_con_rosas_encapsuladas">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="cuadro_spotify_con_rosas_encapsuladas.png" alt="Cuadro de Spotify con rosas encapsuladas" class="activo">
+          <img src="cuadro_spotify_con_rosas_encapsuladas1.png" alt="Cuadro de Spotify con rosas encapsuladas">
+        
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('cuadro_spotify_con_rosas_encapsuladas', -1)">⬅️</button>
+          <button onclick="cambiarSlide('cuadro_spotify_con_rosas_encapsuladas', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Cuadro de Spotify con rosas encapsuladas</h1>
+      <p class="precio">$8.50</p>
+      <p>Cuadro con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Cuadro%20de%20Spotify%20con%20rosas%20encapsuladas" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- CUADRO PARA MASCOTA -->
+ <section class="detalle" id="cuadro_para_mascota">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="cuadro_para_mascota.png" alt="Cuadro para mascota" class="activo">
+          <img src="cuadro_para_mascota1.png" alt="Cuadro para mascota">
+        
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('cuadro_para_mascota', -1)">⬅️</button>
+          <button onclick="cambiarSlide('cuadro_para_mascota', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Cuadro para mascota</h1>
+      <p class="precio">$8.50</p>
+      <p>Cuadro con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Cuadro%20para%20Mascota" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- LETRAS PERSONALIZADAS -->
+  <section class="detalle" id="letras_personalizadas">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="letras_personalizadas.png" alt="Letras personalizadas 1" class="activo">
+          <img src="letras_personalizadas1.png" alt="Letras personalizadas 2">
+        
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('letras_personalizadas', -1)">⬅️</button>
+          <button onclick="cambiarSlide('letras_personalizadas', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Letras personalizadas</h1>
+      <p class="precio">$8.50</p>
+      <p>Letras con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Letra%20Personalizada" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- FOTOS INMANTADAS -->
+  <section class="detalle" id="fotos_inmantadas">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="fotos_inmantadas.png" alt="Fotos inmantadas 1" class="activo">
+          <!-- <img src="fotos_inmantadas1.png" alt="Fotos inmantadas 2"> -->
+        
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('fotos_inmantadas', -1)">⬅️</button>
+          <button onclick="cambiarSlide('fotos_inmantadas', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Fotos inmantadas</h1>
+      <p class="precio">$8.50</p>
+      <p>Fotos con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Foto%20Inmantada" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- PULSERAS PARA COMPARTIR -->
+  <section class="detalle" id="pulseras_para_compartir">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="pulseras_para_compartir.png" alt="Pulseras para compartir 1" class="activo">
+          <img src="pulseras_para_compartir1.png" alt="Pulseras para compartir 2">
+          <img src="pulseras_para_compartir2.png" alt="Pulseras para compartir 3">
+        
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('pulseras_para_compartir', -1)">⬅️</button>
+          <button onclick="cambiarSlide('pulseras_para_compartir', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Pulseras para compartir</h1>
+      <p class="precio">$8.50</p>
+      <p>Pulseras con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Pulsera%20para%20Compartir" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+  <!-- ------------------------------------------------------------------------------ -->
+<!-- PULSERA TEJIDA -->
+ <section class="detalle" id="pulsera_tejida">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="pulsera_tejida.png" alt="Pulsera tejida 1" class="activo">
+         
+        
+          
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('pulsera_tejida', -1)">⬅️</button>
+          <button onclick="cambiarSlide('pulsera_tejida', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Pulsera tejida</h1>
+      <p class="precio">$8.50</p>
+      <p>Pulseras con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20una%20Pulsera%20tejida" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+<!-- --------------------------------------------------------------------------------- -->
+ <!-- PULSERA PARA HOMBRE -->
+  <section class="detalle" id="pulseras_para_hombre">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="pulseras_para_hombre.png" alt="Pulsera para hombre 1" class="activo">
+       
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('pulseras_para_hombre', -1)">⬅️</button>
+          <button onclick="cambiarSlide('pulseras_para_hombre', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Pulsera para hombre</h1>
+      <p class="precio">$8.50</p>
+      <p>Pulseras con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20una%20Pulsera%20para%20Hombre" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+<!-- ------------------------------------------------------- -->
+<!--  CUADRO DOBLE PARA PADRINOS -->
+ <section class="detalle" id="cuadro_doble_para_padrinos">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="cuadro_doble_para_padrinos.png" alt="Cuadro doble para padrinos 1" class="activo">
+       
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('cuadro_doble_para_padrinos', -1)">⬅️</button>
+          <button onclick="cambiarSlide('cuadro_doble_para_padrinos', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Cuadro doble para padrinos</h1>
+      <p class="precio">$8.50</p>
+      <p>Cuadros con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Cuadro%20Doble%20para%20Padrinos" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+  <!-- -------------------------------------------------------------- -->
 <footer>
-
-    <p>© 2026 Fortune_Ecu · Diseño inspirado en estilo kawaii 💕</p>
+<p>© 2026 Fortune_Ecu · Diseño inspirado en estilo kawaii 💕</p>
   </footer>
 <script>
   const toggle = document.querySelector('.menu-toggle');
@@ -1451,26 +2830,63 @@ document.getElementById('buscador').addEventListener('input', function() {
 // Productos por categoría
 const productosPorSeccion = {
   destacados: [
-    { nombre: "Caja decorativa", precio: "$12.00", imagen: "https://via.placeholder.com/150?text=Caja+decorativa" },
-    { nombre: "Taza personalizada", precio: "$8.50", imagen: "https://via.placeholder.com/150?text=Taza+personalizada" },
-    { nombre: "Agenda premium", precio: "$15.00", imagen: "https://via.placeholder.com/150?text=Agenda+premium" }
-  ],
-  mayoreo: [
-    { nombre: "Pack de 10 tazas", precio: "$70.00", imagen: "https://via.placeholder.com/150?text=Pack+de+10+tazas" },
-    { nombre: "Set de stickers", precio: "$25.00", imagen: "https://via.placeholder.com/150?text=Set+de+stickers" }
-  ],
-  extras: [
-    { nombre: "Moño decorativo", precio: "$2.00", imagen: "https://via.placeholder.com/150?text=Moño+decorativo" },
-    { nombre: "Etiqueta personalizada", precio: "$1.50", imagen: "https://via.placeholder.com/150?text=Etiqueta+personalizada" }
+    { 
+      nombre: "Caja decorativa", 
+      precio: "$12.00", 
+      imagenes: ["img/caja1.png","img/caja2.png","img/caja3.png"],
+      descripcion: "Caja decorativa ideal para regalos."
+    },
+    { 
+      nombre: "Taza personalizada", 
+      precio: "$8.50", 
+      imagenes: ["img/taza1.png","img/taza2.png"],
+      descripcion: "Taza personalizada con tu diseño favorito."
+    }
   ],
   combos: [
-    { nombre: "Moño decorativo", precio: "$2.00", imagen: "https://via.placeholder.com/150?text=Moño+decorativo" },
-    { nombre: "Etiqueta personalizada", precio: "$1.50", imagen: "https://via.placeholder.com/150?text=Etiqueta+personalizada" }
-    ]
+    { 
+      nombre: "box4",
+      precio: "$25.00", 
+      imagenes: ["box4.png","box5.png"],
+      descripcion: "Incluye un vaso decorado y un joyero elegante."
+    },
+    { 
+      nombre: "box5",
+      precio: "$25.00", 
+      imagenes: ["img/combo_camisas.png","img/combo_camisas1.png"],
+      descripcion: "Pack de camisas personalizadas con diseño exclusivo."
+    }
+  ],
+  extras: [
+    { 
+      nombre: "Moño decorativo", 
+      precio: "$2.00", 
+      imagenes: ["img/moño1.png","img/moño2.png"],
+      descripcion: "Moño decorativo para complementar tus regalos."
+    }
+  ]
 };
 
-// Abrir modal al hacer clic
-document.querySelectorAll('.menu-items a').forEach(opcion => {
+// Función para abrir detalle de producto
+function abrirDetalle(producto) {
+  document.getElementById('detalleTitulo').textContent = producto.nombre;
+  document.getElementById('detalleDescripcion').textContent = producto.descripcion;
+
+  // Generar imágenes
+  document.getElementById('detalleImagenes').innerHTML = producto.imagenes.map(img => 
+    `<img src="${img}" alt="${producto.nombre}">`
+  ).join('');
+
+  document.getElementById('detalleProducto').style.display = "flex";
+}
+
+// Cerrar detalle
+document.getElementById('cerrarDetalle').onclick = () => {
+  document.getElementById('detalleProducto').style.display = "none";
+};
+
+// Abrir modal al hacer clic en menú
+document.querySelectorAll('.menu-opciones a').forEach(opcion => {
   opcion.addEventListener('click', e => {
     e.preventDefault();
     const seccion = e.target.dataset.seccion;
@@ -1478,37 +2894,99 @@ document.querySelectorAll('.menu-items a').forEach(opcion => {
 
     document.getElementById('titulo-seccion').innerHTML = texto;
 
+    // ✅ Limpia el contenedor antes de agregar nuevos productos
+    document.getElementById('productos').innerHTML = '';
+
     // Generar productos dinámicamente
-    const productosHTML = productosPorSeccion[seccion].map(p => `
-      <div class="item-card">
-        <img src="${p.imagen}" alt="${p.nombre}">
+    const productosHTML = productosPorSeccion[seccion].map((p, index) => `
+      <div class="producto">
+        <img src="${p.imagenes[0]}" alt="${p.nombre}" 
+             onclick="abrirDetalle(productosPorSeccion['${seccion}'][${index}])">
         <h3>${p.nombre}</h3>
         <p>${p.precio}</p>
-        <button class="btn-buy" onclick="window.open('https://wa.me/593000000000?text=Hola, quiero comprar ${p.nombre}', '_blank')">Comprar ahora</button>
+        <button class="btn-comprar"
+          onclick="window.open('https://wa.me/593000000000?text=Hola, quiero comprar ${p.nombre}', '_blank')">
+          Comprar ahora
+        </button>
       </div>
     `).join('');
 
-    document.querySelector('.overlay-products').innerHTML = productosHTML;
-    document.querySelector('.overlay-box').style.display = "flex";
+    document.getElementById('productos').innerHTML = productosHTML;
+    document.getElementById('pantalla').style.display = "flex";
+
+    iniciarCarrusel(seccion);
   });
 });
 
-// Cerrar modal
-document.querySelector('.overlay-close').onclick = () => {
-  document.querySelector('.overlay-box').style.display = "none";
+// Carrusel automático cada 3 segundos
+function iniciarCarrusel(seccion) {
+  const imagenes = document.querySelectorAll(`#productos .producto img`);
+  imagenes.forEach(imgElement => {
+    let intervalo = setInterval(() => {
+      if (document.getElementById('pantalla').style.display === "flex") {
+        navegarImagen(imgElement, 1);
+      } else {
+        clearInterval(intervalo);
+      }
+    }, 3000);
+  });
+}
+
+// Función para navegar imágenes
+function navegarImagen(imgElement, direccion) {
+  const seccion = imgElement.dataset.seccion;
+  const productoIndex = imgElement.dataset.producto;
+  let currentIndex = parseInt(imgElement.dataset.index || 0);
+
+  const imagenes = productosPorSeccion[seccion][productoIndex]?.imagenes || [];
+  if (imagenes.length === 0) return;
+
+  currentIndex = (currentIndex + direccion + imagenes.length) % imagenes.length;
+
+  imgElement.src = imagenes[currentIndex];
+  imgElement.dataset.index = currentIndex;
+}
+
+// Cerrar modal principal
+document.getElementById('cerrar').onclick = () => {
+  document.getElementById('pantalla').style.display = "none";
 };
 
 // Cerrar al hacer clic fuera del contenido
 window.onclick = e => {
-  if (e.target.classList.contains("overlay-box")) {
-    document.querySelector('.overlay-box').style.display = "none";
+  if (e.target.id === "pantalla") {
+    document.getElementById('pantalla').style.display = "none";
+  }
+  if (e.target.id === "detalleProducto") {
+    document.getElementById('detalleProducto').style.display = "none";
   }
 };
+    window.addEventListener('popstate', function() {
+  volverCatalogo(); // tu función que muestra el catálogo
+});
+function abrirProducto(id) {
+  mostrarDetalle(id);
+  history.pushState({ producto: id }, '', '#producto-' + id);
+}
 
-/* -------------------------------------------------------------- */
 
+// Cuando entras al detalle del producto
+function abrirProducto(id) {
+  mostrarDetalle(id); // tu función que muestra la pantalla del producto
+  history.pushState({ producto: id }, '', '#producto-' + id);
+}
 
-    
+// Detecta cuando el usuario presiona la flecha "atrás" del navegador
+window.addEventListener('popstate', function() {
+  volverCatalogo(); // tu función que regresa al catálogo
+});
+
+let startX = 0;
+document.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+document.addEventListener('touchend', e => {
+  if (e.changedTouches[0].clientX - startX > 100) volverCatalogo(); // swipe hacia la derecha
+});
+
   </script>
 </body>
 </html>
