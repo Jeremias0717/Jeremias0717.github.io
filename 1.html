@@ -411,28 +411,56 @@
   }
 }
 .menu-scroll {
-  margin-top: 15px;
-  background-color: #ffe6f0;
+  background-color: #fde8f0;
   padding: 10px;
-  border-radius: 12px;
+  border-radius: 10px;
+  overflow-x: auto;              /* activa scroll horizontal */
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;         /* oculta scrollbar en Firefox */
 }
 
-/* Estilo general (computadoras y pantallas grandes) */
+.menu-scroll::-webkit-scrollbar {
+  display: none;                 /* oculta scrollbar en Chrome/Safari */
+}
+
 .menu-opciones {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 15px;
+  display: inline-flex;
+  gap: 10px;
 }
 
 .menu-opciones a,
 .menu-buscar {
-  padding: 8px 12px;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  text-align: center;
+  flex: 0 0 auto;
+  text-decoration: none;
+  color: #4a0072;
+  background: #fff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
 }
+
+.menu-opciones a:hover,
+.menu-buscar:hover {
+  background-color: #f8d8e8;
+  transform: scale(1.05);
+}
+
+/* === Ajustes para móviles === */
+@media (max-width: 768px) {
+  .menu-scroll {
+    padding: 8px;
+  }
+
+  .menu-opciones a,
+  .menu-buscar {
+    font-size: 0.9rem;
+    padding: 6px 10px;
+  }
+}
+
+
 
 .menu-buscar {
   border: 1px solid #ccc;
@@ -745,6 +773,29 @@ body {
   border-radius: 10px;
   margin-bottom: 10px;
 }
+#cerrar, #cerrarDetalle {
+  float: right;
+  cursor: pointer;
+  font-size: 26px;
+  color: #fff;
+  background-color: #4a0072;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+#cerrar:hover, #cerrarDetalle:hover {
+  background-color: #6a00a8;
+  transform: rotate(90deg);
+}
+/* ----------------------------------------------------------- */
+
+
 
 
 /* <!--  ----------------------------------------------------- --> */
@@ -756,9 +807,8 @@ body {
 </head>
 <body>
   <header>
-    <div class="logo">
-        <div class="logo-circular">
-  <img src="logo-fotune.jpg.jpeg" alt="Logo Fortune" />
+  <div class="logo-circular">
+  <img src="logo-fotune.jpg.jpeg" alt="Logo Fortune" onclick="irHome()" />
 </div>
 
       <h1>Fortune_Ecu</h1>
@@ -779,8 +829,8 @@ body {
 
     <a href="#" data-seccion="destacados">✨ Destacados</a>
     <a href="#" data-seccion="mayoreo">💰 Precios al por mayor</a>
-    <a href="#" data-seccion="extras">🎀 Extras</a>
-    <a href="#" data-seccion="combos">🎀 Combos</a>
+    <a href="#" data-seccion="extras">🤑 Extras</a>
+    <a href="#" data-seccion="combos">📦 Combos</a>
     <a href="#" data-seccion="combos">🎉  Fiesta</a>
   </div>
 </div>
@@ -962,8 +1012,8 @@ body {
       <p class="precio">$5.00</p>
       <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Stickers%20para%20tu%20negocio" target="_blank" class="btn-comprar">Comprar ahora</a>
       </a>
-      </div>     
-    <div class="producto">
+      </div>
+      <div class="producto">
       <img src="Vasos_para_padrinos.png" alt="Vasos para padrinos" onclick="mostrarDetalle('Vasos_para_padrinos')" />
       <h3>Vasos para padrinos</h3>
       <p class="precio">$5.00</p>
@@ -991,13 +1041,14 @@ body {
       <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20velas%20personalizadas%20para%20bautizo" target="_blank" class="btn-comprar">Comprar ahora</a>
       </a>
       </div>
-            <div class="producto">
+      <div class="producto">
       <img src="graduacion.png" alt="Vasos para graduación" onclick="mostrarDetalle('Vasos_para_graduacion')" />
       <h3>Vasos para graduación</h3>
       <p class="precio">$5.00</p>
       <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20par%20de%20vasos%20para%20graduación" target="_blank" class="btn-comprar">Comprar ahora</a>
       </a>
       </div>
+            
       <div class="producto">
       <img src="Cuadros_con nombre_3D.png" alt="Cuadros con nombre 3D" onclick="mostrarDetalle('Cuadros_con_nombre_3D')" />
       <h3>Cuadros con nombre 3D</h3>
@@ -1698,10 +1749,13 @@ body {
     <div class="detalle-imagen">
       <div class="galeria">
         <div class="slides">
-         <img src="stickers_para_negocio.png" alt="Stickers para tu negocio 1" class="activo">
+          <img src="stickers_para_negocio.png" alt="Stickers para tu negocio 1" class="activo">
           <img src="stickers_para_negocio1.png" alt="Stickers para tu negocio 2">
           <img src="stickers_para_negocio2.png" alt="Stickers para tu negocio 3">
           <img src="stickers_para_negocio3.png" alt="Stickers para tu negocio 4">
+          
+
+         
           
         </div>
         <div class="controles">
@@ -1870,10 +1924,13 @@ body {
     <div class="detalle-imagen">
       <div class="galeria">
         <div class="slides">
-         <img src="graduacion.png" alt="Vasos para graduación 1" class="activo">
+          <img src="graduacion.png" alt="Vasos para graduación 1" class="activo">
           <img src="graduacion1.png" alt="Vasos para graduación 2">
           <img src="graduacion2.png" alt="Vasos para graduación 3
-           
+         
+          
+          
+          
         </div>
         <div class="controles">
           <button onclick="cambiarSlide('Vasos_para_graduacion', -1)">⬅️</button>
@@ -2768,10 +2825,11 @@ body {
       <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
     </div>
   </div>
+  
   </section>
   <!-- -------------------------------------------------------------- -->
 <footer>
-<p>© 2026 Fortune_Ecu · Diseño inspirado en estilo kawaii 💕</p>
+<p>© 2026 Fortune_Ecu. Todos los derechos reservados. Prohibida la reproducción total o parcial de este contenido sin autorización previa</p>
   </footer>
 <script>
   const toggle = document.querySelector('.menu-toggle');
@@ -2780,7 +2838,12 @@ body {
     opciones.style.display = opciones.style.display === 'flex' ? 'none' : 'flex';
   });
 </script>
-
+<script>
+function irHome() {
+  // Redirige siempre a la pantalla principal
+  window.location.href = "1.html";
+}
+</script>
   <script>
     function verDetalles(nombre, descripcion) {
       alert("📌 " + nombre + "\n\n" + descripcion);
@@ -3004,6 +3067,130 @@ document.addEventListener('touchend', e => {
     volverCatalogo(); // swipe hacia la derecha → volver
   }
 });
+/* ---------------------------------------------------------------------------------- */
+// Función para abrir detalle de producto
+function abrirDetalle(producto) {
+  document.getElementById('detalleTitulo').textContent = producto.nombre;
+  document.getElementById('detalleDescripcion').textContent = producto.descripcion;
+
+  document.getElementById('detalleImagenes').innerHTML = producto.imagenes.map(img => 
+    `<img src="${img}" alt="${producto.nombre}">`
+  ).join('');
+
+  document.getElementById('detalleProducto').style.display = "flex";
+  history.pushState({ tipo: 'detalle', producto: producto.nombre }, '', '#producto-'+producto.nombre);
+}
+
+// Cerrar detalle
+document.getElementById('cerrarDetalle').onclick = () => {
+  document.getElementById('detalleProducto').style.display = "none";
+  history.back();
+};
+
+// Abrir modal al hacer clic en menú
+document.querySelectorAll('.menu-opciones a').forEach(opcion => {
+  opcion.addEventListener('click', e => {
+    e.preventDefault();
+    const seccion = e.target.dataset.seccion;
+    const texto = e.target.textContent.trim();
+
+    document.getElementById('titulo-seccion').innerHTML = texto;
+    document.getElementById('productos').innerHTML = '';
+
+    const productosHTML = productosPorSeccion[seccion].map((p, index) => `
+      <div class="producto">
+        <img src="${p.imagenes[0]}" alt="${p.nombre}" 
+             onclick="abrirDetalle(productosPorSeccion['${seccion}'][${index}])">
+        <h3>${p.nombre}</h3>
+        <p>${p.precio}</p>
+        <button class="btn-comprar"
+          onclick="window.open('https://wa.me/593000000000?text=Hola, quiero comprar ${p.nombre}', '_blank')">
+          Comprar ahora
+        </button>
+      </div>
+    `).join('');
+
+    document.getElementById('productos').innerHTML = productosHTML;
+    document.getElementById('pantalla').style.display = "flex";
+
+    iniciarCarrusel(seccion);
+
+    // Empujar estado al historial
+    history.pushState({ tipo: 'seccion', seccion }, '', '#'+seccion);
+  });
+});
+
+// Carrusel automático
+function iniciarCarrusel(seccion) {
+  const imagenes = document.querySelectorAll(`#productos .producto img`);
+  imagenes.forEach(imgElement => {
+    let intervalo = setInterval(() => {
+      if (document.getElementById('pantalla').style.display === "flex") {
+        navegarImagen(imgElement, 1);
+      } else {
+        clearInterval(intervalo);
+      }
+    }, 3000);
+  });
+}
+
+function navegarImagen(imgElement, direccion) {
+  const seccion = imgElement.dataset.seccion;
+  const productoIndex = imgElement.dataset.producto;
+  let currentIndex = parseInt(imgElement.dataset.index || 0);
+
+  const imagenes = productosPorSeccion[seccion]?.[productoIndex]?.imagenes || [];
+  if (imagenes.length === 0) return;
+
+  currentIndex = (currentIndex + direccion + imagenes.length) % imagenes.length;
+  imgElement.src = imagenes[currentIndex];
+  imgElement.dataset.index = currentIndex;
+}
+
+// Cerrar modal principal
+document.getElementById('cerrar').onclick = () => {
+  document.getElementById('pantalla').style.display = "none";
+  history.back();
+};
+
+// Cerrar al hacer clic fuera
+window.onclick = e => {
+  if (e.target.id === "pantalla") {
+    document.getElementById('pantalla').style.display = "none";
+    history.back();
+  }
+  if (e.target.id === "detalleProducto") {
+    document.getElementById('detalleProducto').style.display = "none";
+    history.back();
+  }
+};
+
+// Manejo de historial con popstate
+window.addEventListener('popstate', e => {
+  if (!e.state) {
+    document.getElementById('pantalla').style.display = "none";
+    document.getElementById('detalleProducto').style.display = "none";
+    return;
+  }
+
+  if (e.state.tipo === 'seccion') {
+    document.getElementById('pantalla').style.display = "flex";
+    document.getElementById('detalleProducto').style.display = "none";
+  }
+
+  if (e.state.tipo === 'detalle') {
+    document.getElementById('detalleProducto').style.display = "flex";
+  }
+});
+
+// Swipe para volver
+/* let startX = 0;  */// x inicial del toque
+document.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+document.addEventListener('touchend', e => {
+  if (e.changedTouches[0].clientX - startX > 100) history.back();
+});
+
+/* ------------------------------------------------------- */
 
 
 
