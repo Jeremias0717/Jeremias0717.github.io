@@ -2971,21 +2971,41 @@ function abrirProducto(id) {
 
 
 // Cuando entras al detalle del producto
-function abrirProducto(id) {
-  mostrarDetalle(id); // tu función que muestra la pantalla del producto
+function mostrarDetalle(id) {
+  const catalogo = document.getElementById("catalogo");
+  catalogo.style.opacity = "0";
+  setTimeout(() => {
+    catalogo.style.display = "none";
+    document.getElementById(id).classList.add("activo");
+  }, 500);
+
+  // Guardar en el historial del navegador
   history.pushState({ producto: id }, '', '#producto-' + id);
 }
 
 // Detecta cuando el usuario presiona la flecha "atrás" del navegador
-window.addEventListener('popstate', function() {
-  volverCatalogo(); // tu función que regresa al catálogo
+window.addEventListener('popstate', function(event) {
+  volverCatalogo();
 });
 
+// Función para volver al catálogo
+function volverCatalogo() {
+  document.querySelectorAll(".detalle").forEach(d => d.classList.remove("activo"));
+  const catalogo = document.getElementById("catalogo");
+  catalogo.style.display = "grid";
+  setTimeout(() => {
+    catalogo.style.opacity = "1";
+  }, 50);
+}
 let startX = 0;
 document.addEventListener('touchstart', e => startX = e.touches[0].clientX);
 document.addEventListener('touchend', e => {
-  if (e.changedTouches[0].clientX - startX > 100) volverCatalogo(); // swipe hacia la derecha
+  if (e.changedTouches[0].clientX - startX > 100) {
+    volverCatalogo(); // swipe hacia la derecha → volver
+  }
 });
+
+
 
   </script>
 </body>
