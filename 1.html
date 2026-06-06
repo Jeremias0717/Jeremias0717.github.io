@@ -12,15 +12,21 @@
   margin: auto;
 }
 
+.btn-flecha {
+  display: none; /* oculta las flechas */
+}
+
 .slides img {
+  display: none;
   width: 100%;
   border-radius: 10px;
-  display: none; /* Ocultas todas por defecto */
+  cursor: pointer;
 }
 
 .slides img.activo {
-  display: block; /* Solo la activa se muestra */
+  display: block;
 }
+
 
 .controles {
   margin-top: 0.5rem;
@@ -190,13 +196,64 @@
 }
 
 .detalle-texto h1 {
-  color: #d97ca3;
-  margin-bottom: 0.5rem;
+  font-family: 'Playfair Display', serif; /* tipografía elegante */
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #d97ca3; /* tono rosado sofisticado */
+  letter-spacing: 1px;
+  margin-bottom: 0.4rem;
+  text-shadow: 1px 1px 5px rgba(217, 124, 163, 0.2);
 }
 
 .detalle-texto p {
-  margin-bottom: 0.8rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+
 }
+/* --------------------------------------------------------------- */
+/* MODIFICAR DENTRO DE CADA PESTAÑA */
+.detalle {
+  max-width: 1100px; /* límite de ancho para pantallas grandes */
+  margin: 0 auto; /* centra el bloque */
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 25px;
+  border: 4px solid #f4b6c2; /* contorno rosado pastel */
+  box-shadow: 0 0 25px rgba(255, 182, 193, 0.4),
+              0 0 40px rgba(173, 216, 230, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.detalle:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 35px rgba(255, 182, 193, 0.6),
+              0 0 50px rgba(173, 216, 230, 0.5);
+}
+
+.detalle-contenido {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  text-align: left;
+}
+
+.detalle-imagen {
+  flex: 1 1 350px;
+  display: flex;
+  justify-content: center;
+}
+
+.detalle-texto {
+  flex: 1 1 350px;
+  max-width: 500px; /* evita que el texto se extienda demasiado */
+}
+/* --------------------------------------------------------------- */
+
+
 /* Diseño lado a lado para pantallas grandes */
 .detalle-contenido {
   display: flex;
@@ -684,26 +741,45 @@ body {
   color: #4a0072;
 }
 
-/* === Estilo general conservando tu diseño actual === */
-#productos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+/* === Estilo general del catalogo por fuera === */
+.seccion-productos {
   margin-top: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 25px;
+  border: 3px solid #f4b6c2; /* rosa pastel principal */
+  box-shadow: 0 0 25px rgba(255, 182, 193, 0.6),
+              0 0 40px rgba(173, 216, 230, 0.5),
+              inset 0 0 10px rgba(255, 255, 255, 0.4); /* brillo interno */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.seccion-productos:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px rgba(255, 182, 193, 0.8),
+              0 0 50px rgba(173, 216, 230, 0.6),
+              inset 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
 .producto {
-  background: #fdf6f9; /* tono rosado suave */
+  margin: 10px 0;
+  padding: 12px;
+  background-color: #ffe6f0;
   border-radius: 15px;
-  padding: 15px;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
+  border: 2px solid #f8c8dc;
+  box-shadow: 0 4px 10px rgba(255, 182, 193, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .producto:hover {
   transform: scale(1.03);
+  box-shadow: 0 6px 15px rgba(255, 182, 193, 0.5),
+              0 0 10px rgba(173, 216, 230, 0.4);
 }
+/* --------------------------------------------------------------- */
+
+
+
 
 .producto img {
   width: 100%;
@@ -793,6 +869,29 @@ body {
   background-color: #6a00a8;
   transform: rotate(90deg);
 }
+.iconos-redes {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  color: #bfa77f; /* dorado suave */
+  
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.iconos-redes i {
+  font-size: 32px;
+  color: #bfa77f; /* rosa pastel */
+  transition: all 0.3s ease;
+}
+
+.iconos-redes i:hover {
+  color: #fff;
+  transform: scale(1.2);
+  text-shadow: 0 0 10px #f8c8e8;
+}
+
+
 /* ----------------------------------------------------------- */
 
 
@@ -811,14 +910,37 @@ body {
   <img src="logo-fotune.jpg.jpeg" alt="Logo Fortune" onclick="irHome()" />
 </div>
 
-      <h1>Fortune_Ecu</h1>
-      <p></p>
-      <div class="icons">
-  <a href="https://www.instagram.com/fortune_ecu" target="_blank" class="icon">📸</a>
-  <a href="https://www.facebook.com/profile.php?id=61559043016392" target="_blank" class="icon">👍🏻</a>
+      <h1 class="titulo-principal">FORTUNE_ECU</h1>
+      
+     
+<!-- Enlaza Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <a href="https://www.tiktok.com/@fortune_ecu2?is_from_webapp=1&sender_device=pc" target="_blank" class="icon">🎵</a>
+<div class="iconos-redes">
+  <a href="https://www.instagram.com/fortune_ecu" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+  <a href="https://www.tiktok.com/@fortune_ecu2?is_from_webapp=1&sender_device=pc" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+  <a href="https://wa.me/593984496686?text=Hola!,%20he%20visto%20tu%20pagina%20y%20me%20interesa" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+  <a href="https://www.facebook.com/profile.php?id=61559043016392" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+
 </div>
+<!-- Importa la fuente desde Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+.titulo-principal {
+  font-family: 'Cinzel', serif; /* elegante y minimalista */
+  font-weight: 600;
+  color: #bfa77f; /* dorado suave */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background-color: transparent;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+
+
+
+</style>
 
     </div>
    <!--  ----------------------------------------------------- -->
@@ -831,7 +953,8 @@ body {
     <a href="#" data-seccion="mayoreo">💰 Precios al por mayor</a>
     <a href="#" data-seccion="extras">🤑 Extras</a>
     <a href="#" data-seccion="combos">📦 Combos</a>
-    <a href="#" data-seccion="combos">🎉  Fiesta</a>
+    <a href="#" data-seccion="fiesta">🎉  Fiesta</a>
+    <a href="#" data-seccion="baby shower"> babyshower</a>
   </div>
 </div>
 
@@ -965,12 +1088,13 @@ body {
       </a>
       </div>
       <div class="producto">
-      <img src="cuadro_hotwheels.png" alt="cuadro hotwheels" onclick="mostrarDetalle('cuadro_hotwheels')" />
+      <img src="cuadro_hotwheels1.png" alt="cuadro hotwheels" onclick="mostrarDetalle('cuadro_hotwheels')" />
       <h3>Cuadro de Hotwheels </h3>
       <p class="precio">$8.50</p>
       <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20cuadro%20hotwheels" target="_blank" class="btn-comprar">Comprar ahora</a>
       </a>
       </div>
+    
    <div class="producto">
       <img src="vaso_vidrio_simple.png" alt="vaso vidrio simple" onclick="mostrarDetalle('vaso_vidrio_simple')" />
       <h3>Vaso de vidrio sencillo</h3>
@@ -1140,7 +1264,27 @@ body {
       <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%2311" target="_blank" class="btn-comprar">Comprar ahora</a>
       </a>
       </div>
-     
+      <div class="producto">
+      <img src="box12.png" alt="Box #12" onclick="mostrarDetalle('Box_12')" />
+      <h3>Box #12</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%2312" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+     <div class="producto">
+      <img src="box13.png" alt="Box #13" onclick="mostrarDetalle('Box_13')" />
+      <h3>Box #13</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%2313" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="box14.png" alt="Box #14" onclick="mostrarDetalle('Box_14')" />
+      <h3>Box #14</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%2314" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
       <div class="producto">
       <img src="Topper.png" alt="Topper" onclick="mostrarDetalle('Topper')" />
       <h3>Topper</h3>
@@ -1167,6 +1311,13 @@ body {
       <h3>Portarretrato para toda ocasion</h3>
       <p class="precio">$5.00</p>
       <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Portarretrato%20para%20Toda%20Ocasión" target="_blank" class="btn-comprar">Comprar ahora</a>
+      </a>
+      </div>
+      <div class="producto">
+      <img src="portarretrato_con_polaroi_ 3D.png" alt="portarretrato con polaroid 3D" onclick="mostrarDetalle('portarretrato_con_polaroid_3D')" />
+      <h3>Portarretrato con polaroid 3D</h3>
+      <p class="precio">$5.00</p>
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Portarretrato%20con%20Polaroid%203D" target="_blank" class="btn-comprar">Comprar ahora</a>
       </a>
       </div>
 <div class="producto">
@@ -1211,16 +1362,81 @@ body {
   <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20una%20Pulsera%20para%20Hombre" 
      target="_blank" class="btn-comprar">Comprar ahora</a>
 </div> 
+<div class="producto">
+  <img src="raspaditas_personalizadas.png" alt="Raspaditas personalizadas" onclick="mostrarDetalle('raspaditas_personalizadas')" />
+  <h3>Raspaditas personalizadas</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20una%20Raspadita%20Personalizada" 
+     target="_blank" class="btn-comprar">Comprar ahora</a>
+</div> 
+<div class="producto">
+  <img src="caja_para_sobre.png" alt="Caja para sobre" onclick="mostrarDetalle('caja_para_sobre')" />
+  <h3>Caja para sobre</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20una%20Caja%20para%20Sobre" 
+     target="_blank" class="btn-comprar">Comprar ahora</a>
+     </div> 
+<div class="producto">
+  <img src="actividades_para_babyshower.png" alt="Actividades para babyshower" onclick="mostrarDetalle('actividades_para_babyshower')" />
+  <h3>Actividades para babyshower</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20una%20Actividad%20para%20Babyshower" 
+     target="_blank" class="btn-comprar">Comprar ahora</a>
+</div>
+     <div class="producto">
+  <img src="recuerdo_de_babyshower.png" alt="Recuerdo de babyshower" onclick="mostrarDetalle('recuerdo_de_babyshower')" />
+  <h3>Recuerdo de babyshower</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Recuerdo%20de%20Babyshower"
+     target="_blank" class="btn-comprar">Comprar ahora</a> </div>
 
-     
+      <div class="producto">
+  <img src="combo_completo_babyshower.png" alt="Combo completo babyshower" onclick="mostrarDetalle('combo_completo_babyshower')" />
+  <h3>Combo completo babyshower</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Combo%20Completo%20de%20Babyshower"
+     target="_blank" class="btn-comprar">Comprar ahora</a>
+     </div>
+
+     <div class="producto">
+  <img src="arreglos_de_hotwheels.png" alt="Arreglos de hotwheels" onclick="mostrarDetalle('arreglos_de_hotwheels')" />
+  <h3>Arreglos de hotwheels</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Arreglo%20de%20Hotwheels"
+     target="_blank" class="btn-comprar">Comprar ahora</a>
+     </div>
       
-     
-      
-      
-   
-   
-   
-   
+      <div class="producto">
+  <img src="mini_libros_para_colorear.png" alt="Mini libros para colorear" onclick="mostrarDetalle('mini_libros_para_colorear')" />
+  <h3>Mini libros para colorear</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Mini%20Libro%20para%20Colorear"
+     target="_blank" class="btn-comprar">Comprar ahora</a>
+     </div>
+   <div class="producto">
+  <img src="tarjetas_hechas_a_mano.png" alt="Tarjetas hechas a mano" onclick="mostrarDetalle('tarjetas_hechas_a_mano')" />
+  <h3>Tarjetas hechas a mano</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20una%20Tarjeta%20hecha%20a%20mano" target="_blank" class="btn-comprar">Comprar ahora</a>    
+     </div>
+   <div class="producto">
+  <img src="arreglo_con_flores_amarillas.png" alt="Arreglo con flores amarillas" onclick="mostrarDetalle('arreglo_con_flores_amarillas')" />
+  <h3>Arreglo con flores amarillas</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Arreglo%20con%20Flores%20Amarillas" target="_blank" class="btn-comprar">Comprar ahora</a>    
+     </div>
+   <div class="producto">
+  <img src="arreglos_de_batman.png" alt="Arreglos de Batman" onclick="mostrarDetalle('arreglos_de_batman')" />
+  <h3>Arreglos de Batman</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Arreglo%20de%20Batman" target="_blank" class="btn-comprar">Comprar ahora</a>    
+     </div>
+   <div class="producto">
+  <img src="arreeglo_floral.png" alt="Arreglo floral" onclick="mostrarDetalle('arreglo_floral')" />
+  <h3>Arreglo floral</h3>
+  <p class="precio">$8.50</p>
+  <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Arreglo%20floral" target="_blank" class="btn-comprar">Comprar ahora</a>    
+     </div>
    
    
     </main>
@@ -1353,6 +1569,12 @@ body {
           <img src="caja_personalizada13.png" alt="Caja personalizada 2">
           <img src="caja_personalizada14 (2).png" alt="Caja personalizada 2">
           <img src="caja_personalizada15.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada16.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada17.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada18.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada19.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada20.png" alt="Caja personalizada 2">
+          <img src="caja_personalizada21.png" alt="Caja personalizada 2">
 
         
 
@@ -1577,6 +1799,10 @@ body {
         <div class="slides">
           <img src="carros_personalizados.png" alt="Carros personalizados 1" class="activo">
           <img src="carros_personalizados1.png" alt="Carros personalizados 2">
+          <img src="carros_personalizados2.png" alt="Carros personalizados 3">
+          <img src="carros_personalizados3.png" alt="Carros personalizados 4">
+          <img src="carros_personalizados4.png" alt="Carros personalizados 5">
+          <img src="carros_personalizados5.png" alt="Carros personalizados 6">
           
           
         </div>
@@ -1682,6 +1908,13 @@ body {
           <img src="llavero_con_foto3.png" alt="Llavero con foto 2">
           <img src="llavero_con_foto4.png" alt="Llavero con foto 2">
           <img src="llavero_con_foto5.png" alt="Llavero con foto 2">
+          <img src="llavero_con_foto6.png" alt="Llavero con foto 2">
+          <img src="llavero_con_foto7.png" alt="Llavero con foto 2">
+          <img src="llavero_con_foto8.png" alt="Llavero con foto 2">
+          <img src="llavero_con_foto9.png" alt="Llavero con foto 2">
+          <img src="llavero_con_foto10.png" alt="Llavero con foto 2">
+          <img src="llavero_con_foto11.png" alt="Llavero con foto 2">
+          <img src="llavero_con_foto12.png" alt="Llavero con foto 2">
 
         
           
@@ -2366,7 +2599,38 @@ body {
     </div>
   </div>
 </section>
+<!-- ------------------------------------------------------------------------- -->
+ <!-- BOX #12 -->
+  <section class="detalle" id="Box_12">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box12.png" alt="Box 12" class="activo">
+          <!-- <img src="box121.png" alt="Box 12"> -->
 
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_12', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_12', 1)">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #12</h1>
+      <p class="precio">$10.00</p>
+      <p>Box #12 con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%2312" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+</section>
+<!-- ------------------------------------------------------------------------- -->
  <!-- GAFAS NOMBRE+AÑO -->
   <section class="detalle" id="gafas_nombre+año">
   <div class="detalle-contenido">
@@ -2506,6 +2770,13 @@ body {
           <img src="portarretrato_para_toda _ocasion4.png" alt="portarretratos para toda ocasion 2">
           <img src="portarretrato_para_toda _ocasion5.png" alt="portarretratos para toda ocasion 2">
           <img src="Portarretrato_para_Toda _Ocasión6.png" alt="portarretratos para toda ocasion 2">
+          <img src="Portarretrato_para_Toda _Ocasión7.png" alt="portarretratos para toda ocasion 2">
+          <img src="Portarretrato_para_Toda _Ocasión8.png" alt="portarretratos para toda ocasion 2">
+          <img src="Portarretrato_para_Toda _Ocasión9.png" alt="portarretratos para toda ocasion 2">
+          <img src="Portarretrato_para_Toda _Ocasión10.png" alt="portarretratos para toda ocasion 2">
+          <img src="Portarretrato_para_Toda _Ocasión11.png" alt="portarretratos para toda ocasion 2">
+          <img src="Portarretrato_para_Toda _Ocasión12.png" alt="portarretratos para toda ocasion 2">
+          <img src="Portarretrato_para_Toda _Ocasión13.png" alt="portarretratos para toda ocasion 2">
        
         </div>
   
@@ -2638,6 +2909,7 @@ body {
         <div class="slides">
           <img src="letras_personalizadas.png" alt="Letras personalizadas 1" class="activo">
           <img src="letras_personalizadas1.png" alt="Letras personalizadas 2">
+          <img src="letras_personalizadas2.png" alt="Letras personalizadas 3">
         
           
         </div>
@@ -2705,6 +2977,12 @@ body {
           <img src="pulseras_para_compartir.png" alt="Pulseras para compartir 1" class="activo">
           <img src="pulseras_para_compartir1.png" alt="Pulseras para compartir 2">
           <img src="pulseras_para_compartir2.png" alt="Pulseras para compartir 3">
+          <img src="pulseras_para_compartir3.png" alt="Pulseras para compartir 4">
+          <img src="pulseras_para_compartir4.png" alt="Pulseras para compartir 5">
+          <img src="pulseras_para_compartir5.png" alt="Pulseras para compartir 6">
+          <img src="pulseras_para_compartir6.png" alt="Pulseras para compartir 7">
+          <img src="pulseras_para_compartir7.png" alt="Pulseras para compartir 8">
+          <img src="pulseras_para_compartir8.png" alt="Pulseras para compartir 9">
         
           
         </div>
@@ -2737,6 +3015,7 @@ body {
       <div class="galeria">
         <div class="slides">
           <img src="pulsera_tejida.png" alt="Pulsera tejida 1" class="activo">
+          <img src="pulsera_tejida1.png" alt="Pulsera tejida 2">
          
         
           
@@ -2770,6 +3049,8 @@ body {
       <div class="galeria">
         <div class="slides">
           <img src="pulseras_para_hombre.png" alt="Pulsera para hombre 1" class="activo">
+          <img src="pulseras_para_hombre2 (1).png" alt="Pulsera para hombre 3">
+          <img src="pulseras_para_hombre2 (2).png" alt="Pulsera para hombre 3">
        
         </div>
         <div class="controles">
@@ -2825,11 +3106,521 @@ body {
       <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
     </div>
   </div>
-  
   </section>
   <!-- -------------------------------------------------------------- -->
-<footer>
-<p>© 2026 Fortune_Ecu. Todos los derechos reservados. Prohibida la reproducción total o parcial de este contenido sin autorización previa</p>
+   <!-- RASPADITAS PERSONALIZADAS --> 
+
+ <section class="detalle" id="raspaditas_personalizadas">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="raspaditas_personalizadas.png" alt="Raspaditas personalizadas 1" class="activo">
+          <img src="raspaditas_personalizadas1.png" alt="Raspaditas personalizadas 2">
+       
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('raspaditas_personalizadas', -1)">⬅️</button>
+          <button onclick="cambiarSlide('raspaditas_personalizadas', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Raspaditas personalizadas</h1>
+      <p class="precio">$8.50</p>
+      <p>Raspaditas con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Raspadita%20Personalizada" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+<!-- ------------------------------------------------------------ -->
+ <!-- CAJA PARA SOBRE -->
+  <section class="detalle" id="caja_para_sobre">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="caja_para_sobre.png" alt="Caja para sobre 1" class="activo">
+         
+       
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('caja_para_sobre', -1)">⬅️</button>
+          <button onclick="cambiarSlide('caja_para_sobre', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Caja para sobre</h1>
+      <p class="precio">$8.50</p>
+      <p>Caja con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Caja%20para%20Sobre" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+<!-- -------------------------------------------------------- -->
+ <!-- ACTIVIDADES PARA BABYSHOWER -->
+  <section class="detalle" id="actividades_para_babyshower">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="actividades_para_babyshower.png" alt="Actividades para babyshower 1" class="activo">
+          <img src="actividades_para_babyshower1.png" alt="Actividades para babyshower 2">
+         
+       
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('actividades_para_babyshower', -1)">⬅️</button>
+          <button onclick="cambiarSlide('actividades_para_babyshower', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Actividades para babyshower</h1>
+      <p class="precio">$8.50</p>
+      <p>Actividades con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Actividad%20para%20Babyshower" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+
+<!-- -------------------------------------------------------- -->
+ <!-- RECUERDO DE BABYSHOWER -->
+  <section class="detalle" id="recuerdo_de_babyshower">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="recuerdo_de_babyshower.png" alt="Recuerdo de babyshower 1" class="activo">
+          <img src="recuerdo_de_babyshower1.png" alt="Recuerdo de babyshower 2">
+         
+       
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('recuerdo_de_babyshower', -1)">⬅️</button>
+          <button onclick="cambiarSlide('recuerdo_de_babyshower', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Recuerdo de babyshower</h1>
+      <p class="precio">$8.50</p>
+      <p>Recuerdos con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Recuerdo%20de%20Babyshower" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+<!-- ----------------------------------------------------------------- -->
+ <!-- COMBO COMPLETO BABYSHOWER -->
+  <section class="detalle" id="combo_completo_babyshower">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="combo_completo_babyshower.png" alt="Combo completo babyshower 1" class="activo">
+          
+         
+       
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('combo_completo_babyshower', -1)">⬅️</button>
+          <button onclick="cambiarSlide('combo_completo_babyshower', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Combo completo babyshower</h1>
+      <p class="precio">$8.50</p>
+      <p>Combo con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Combo%20Completo%20Babyshower" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+<!-- --------------------------------------------------------------- -->
+ <!-- ARREGLOS DE HOTWHEELS -->
+  <section class="detalle" id="arreglos_de_hotwheels">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="arreglos_de_hotwheels.png" alt="Arreglos de hotwheels 1" class="activo">
+          <img src="arreglos_de_hotwheels1.png" alt="Arreglos de hotwheels 2">
+          <img src="arreglos_de_hotwheels2.png" alt="Arreglos de hotwheels 2">
+          <img src="arreglos_de_hotwheels3.png" alt="Arreglos de hotwheels 2">
+          <img src="arreglos_de_hotwheels4.png" alt="Arreglos de hotwheels 2">
+          <img src="arreglos_de_hotwheels5.png" alt="Arreglos de hotwheels 2">
+          <img src="arreglos_de_hotwheels6.png" alt="Arreglos de hotwheels 2">
+          <img src="arreglos_de_hotwheels7.png" alt="Arreglos de hotwheels 2">
+          <img src="arreglos_de_hotwheels8.png" alt="Arreglos de hotwheels 2">
+         
+       
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('arreglos_de_hotwheels', -1)">⬅️</button>
+          <button onclick="cambiarSlide('arreglos_de_hotwheels', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Arreglos de hotwheels</h1>
+      <p class="precio">$8.50</p>
+      <p>Arreglos con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Arreglo%20de%20Hotwheels" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+<!-- --------------------------------------------------------------- -->
+<!-- CUADRO HOTWHEELS -->
+ <section class="detalle" id="cuadro_hotwheels">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="cuadro_hotwheels1.png" alt="Cuadro de hotwheels 1" class="activo">
+          <img src="cuadro_hotwheels2.png" alt="Cuadro de hotwheels 2">
+          <img src="cuadro_hotwheels.png" alt="Cuadro de hotwheels 3">
+          <img src="cuadro_hotwheels3.png" alt="Cuadro de hotwheels 4">
+          <img src="cuadro_hotwheels4.png" alt="Cuadro de hotwheels 5">
+          <img src="cuadro_hotwheels5.png" alt="Cuadro de hotwheels 6">
+          
+         
+       
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('cuadro_hotwheels', -1)">⬅️</button>
+          <button onclick="cambiarSlide('cuadro_hotwheels', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Cuadro de Hotwheels</h1>
+      <p class="precio">$8.50</p>
+      <p>Cuadro con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Cuadro%20de%20Hotwheels" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+ 
+  <!-- ----------------------------------------------------------------------- -->
+   <!-- MINI LIBROS PARA COLOREAR -->
+    <section class="detalle" id="mini_libros_para_colorear">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="mini_libros_para_colorear1.png" alt="Mini libro para colorear 1" class="activo">
+          <img src="mini_libros_para_colorear.png" alt="Mini libro para colorear 2">
+          <img src="mini_libros_para_colorear2.png" alt="Mini libro para colorear 3">
+          <img src="mini_libros_para_colorear3.png" alt="Mini libro para colorear 4">
+          
+        
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('mini_libros_para_colorear', -1)">⬅️</button>
+          <button onclick="cambiarSlide('mini_libros_para_colorear', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Mini libros para colorear</h1>
+      <p class="precio">$8.50</p>
+      <p>Mini libros con diseños únicos y creativos para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Mini%20Libro%20para%20Colorear" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+  <!-- -------------------------------------------------------------------------------------- -->
+   <!-- PORTARRETRATO CON POLAROID  3D--> 
+    <section class="detalle" id="portarretrato_con_polaroid_3D">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="portarretrato_con_polaroi_ 3D.png" alt="Portarretrato con polaroid 3D 1" class="activo">
+          <img src="portarretrato_con_polaroi_ 3D1.png" alt="Portarretrato con polaroid 3D 2">
+         
+          
+         
+       
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('portarretrato_con_polaroid_3D', -1)">⬅️</button>
+          <button onclick="cambiarSlide('portarretrato_con_polaroid_3D', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Portarretrato con polaroid 3D</h1>
+      <p class="precio">$8.50</p>
+      <p>Portarretrato con diseño único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Portarretrato%20con%20Polaroid%203D" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+<!-- ---------------------------------------------------------- -->
+ <!-- TARJETAS HECHAS A MANO -->
+  <section class="detalle" id="tarjetas_hechas_a_mano">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="tarjetas_hechas_a_mano.png" alt="Tarjetas hechas a mano 1" class="activo">
+          <!-- <img src="tarjetas_hechas_a_mano1.png" alt="Tarjetas hechas a mano 2"> -->
+         
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('tarjetas_hechas_a_mano', -1)">⬅️</button>
+          <button onclick="cambiarSlide('tarjetas_hechas_a_mano', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Tarjetas hechas a mano</h1>
+      <p class="precio">$8.50</p>
+      <p>Tarjetas únicas y creativas para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20una%20Tarjeta%20hecha%20a%20mano" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+  <!-- ------------------------------------------------------------------------------ -->
+   <!-- ARREGLO CON FLORES AMARILLAS -->
+<section class="detalle" id="arreglo_con_flores_amarillas">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="arreglo_con_flores_amarillas.png" alt="Arreglo con flores amarillas 1" class="activo">
+          <img src="arreglo_con_flores_amarillas1.png" alt="Arreglo con flores amarillas 2">
+         
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('arreglo_con_flores_amarillas', -1)">⬅️</button>
+          <button onclick="cambiarSlide('arreglo_con_flores_amarillas', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Arreglo con flores amarillas</h1>
+      <p class="precio">$15.00</p>
+      <p>Arreglo floral único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Arreglo%20con%20Flores%20Amarillas" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+<!-- --------------------------------------------------------------------------- -->
+ <!-- ARREGLOS DE BATMAN -->
+  <section class="detalle" id="arreglos_de_batman">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="arreglos_de_batman.png" alt="Arreglos de Batman 1" class="activo">
+          <img src="arreglos_de_batman1.png" alt="Arreglos de Batman 2">
+          
+         
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('arreglos_de_batman', -1)">⬅️</button>
+          <button onclick="cambiarSlide('arreglos_de_batman', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Arreglos de Batman</h1>
+      <p class="precio">$15.00</p>
+      <p>Arreglo floral único y creativo para regalar recuerdos inolvidables.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Arreglo%20de%20Batman" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+<!-- --------------------------------------------------------------------------- -->
+ <!-- BOX #13 -->
+<section class="detalle" id="Box_13">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box13.png" alt="Box #13" class="activo">
+          <!-- <img src="box13_1.png" alt="Box #13 2"> -->
+          
+         
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_13', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_13', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #13</h1>
+      <p class="precio">$15.00</p>
+      <p>Box #13 con productos exclusivos.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%2313" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+<!-- ----------------------------------------------------------------------- -->
+ <!-- BOX #14 -->
+<section class="detalle" id="Box_14">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="box14.png" alt="Box #14" class="activo">
+          <!-- <img src="box14_1.png" alt="Box #14 2"> -->
+          
+         
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('Box_14', -1)">⬅️</button>
+          <button onclick="cambiarSlide('Box_14', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Box #14</h1>
+      <p class="precio">$15.00</p>
+      <p>Box #14 con productos exclusivos.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Box%20%2314" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+<!-- ----------------------------------------------------------------------- -->
+ <!-- AREGLO FLORAL -->
+  <section class="detalle" id="arreglo_floral">
+  <div class="detalle-contenido">
+    <div class="detalle-imagen">
+      <div class="galeria">
+        <div class="slides">
+          <img src="arreeglo_floral.png" alt="Arreglo floral 1" class="activo">
+          <img src="arreeglo_floral1.png" alt="Arreglo floral 2">
+        
+          
+         
+        </div>
+        <div class="controles">
+          <button onclick="cambiarSlide('arreglo_floral', -1)">⬅️</button>
+          <button onclick="cambiarSlide('arreglo_floral', 1)">➡️</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="detalle-texto">
+      <h1>Arreglo floral</h1>
+      <p class="precio">$15.00</p>
+      <p>Arreglo floral con flores frescas.</p>
+
+      <!-- Botón de compra -->
+      <a href="https://wa.me/593984496686?text=Hola%20💖%20quiero%20comprar%20un%20Arreglo%20floral" target="_blank" class="btn-comprar">Comprar ahora</a>
+
+      <!-- Botón volver -->
+      <button class="btn-comprar" onclick="volverCatalogo()">⬅️ Volver al catálogo</button>
+    </div>
+  </div>
+  </section>
+
+  <footer>
+<p>© 2026 Fortune_ecu. Todos los derechos reservados. Prohibida la reproducción total o parcial de este contenido sin autorización previa</p>
   </footer>
 <script>
   const toggle = document.querySelector('.menu-toggle');
@@ -2887,6 +3678,7 @@ document.getElementById('buscador').addEventListener('input', function() {
   imagenes[indice].classList.add("activo");
   detalle.dataset.indice = indice;
 }
+
 
 /* /* --------------------------------------------------------------
  */
@@ -2981,19 +3773,7 @@ document.querySelectorAll('.menu-opciones a').forEach(opcion => {
   });
 });
 
-// Carrusel automático cada 3 segundos
-function iniciarCarrusel(seccion) {
-  const imagenes = document.querySelectorAll(`#productos .producto img`);
-  imagenes.forEach(imgElement => {
-    let intervalo = setInterval(() => {
-      if (document.getElementById('pantalla').style.display === "flex") {
-        navegarImagen(imgElement, 1);
-      } else {
-        clearInterval(intervalo);
-      }
-    }, 3000);
-  });
-}
+
 
 // Función para navegar imágenes
 function navegarImagen(imgElement, direccion) {
@@ -3191,6 +3971,8 @@ document.addEventListener('touchend', e => {
 });
 
 /* ------------------------------------------------------- */
+
+
 
 
 
